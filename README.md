@@ -1,7 +1,5 @@
-# PAINTIVE
-
 ## Description
-**paintive** is an Android application that allows user to draw with color selection.
+**Canvy** is an Progressive Web Application that allows user to draw on canvas, with color & thickness selection.
 
 ## Functionalities
 Functionalities that I have decided to implement:
@@ -12,7 +10,8 @@ Functionalities that I have decided to implement:
 
 ## Technologies
 Technologies that I have used to write this application:
-* `react-native`
-* `react-native-sensors`
+* `react`
+* `react-accelerometer`
 * `redux`
 * `typescript`
+* `service workers`
