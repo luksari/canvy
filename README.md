@@ -1,4 +1,4 @@
-![Logo](https://github.com/luksari/canvy/blob/master/logo.svg)
+![Logo Canvy](https://github.com/luksari/canvy/blob/master/logo.svg)
 
 ## Description
 **Canvy** is an Progressive Web Application that allows user to draw on canvas, with color & thickness selection.
