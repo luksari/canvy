@@ -12,9 +12,9 @@ Functionalities that I have decided to implement:
 
 ## Technologies
 Technologies that I have used to write this application:
-* `react`
+* [`react`](https://github.com/facebook/react)
 * [`typesafe-actions`](https://github.com/piotrwitek/typesafe-actions)
-* `react-accelerometer`
-* `redux`
-* `typescript`
-* `service workers`
+* [`redux`](https://github.com/reduxjs/redux)
+* [`typescript`](https://github.com/Microsoft/TypeScript)
+* [`redux-immutable-state-invariant`](https://github.com/leoasis/redux-immutable-state-invariant)
+* [`react-color`](https://github.com/casesandberg/react-color/)
