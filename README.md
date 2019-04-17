@@ -13,6 +13,7 @@ Functionalities that I have decided to implement:
 ## Technologies
 Technologies that I have used to write this application:
 * `react`
+* `[typesafe-actions](https://github.com/piotrwitek/typesafe-actions)`
 * `react-accelerometer`
 * `redux`
 * `typescript`
