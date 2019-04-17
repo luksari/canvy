@@ -17,4 +17,3 @@ Technologies that I have used to write this application:
 * `redux`
 * `typescript`
 * `service workers`
->>>>>>> 18e79fc3d9ead9f14c0b57d4122a55320bdfea3c
