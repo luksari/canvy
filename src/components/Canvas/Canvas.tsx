@@ -1,11 +1,22 @@
 import React, { Component, RefObject, createRef } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
+import { stat } from 'fs';
+import { canvasActions } from './duck';
 
-type Props = {
-  width?: number,
-  height?: number
+
+const mapDispatchToProps = {
+  startDrawing: canvasActions.startDrawing,
+  drawing: canvasActions.drawing,
+  endDrawing: canvasActions.endDrawing
 }
+
+const mapStateToProps = (state: RootState) => ({
+  isDrawing: state.canvasReducer.isDrawing
+})
+
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 type State = {
 
@@ -43,13 +54,15 @@ class CanvasComponentRaw extends Component<Props, State> {
   }
   render() {
     return (
-      <canvas ref={this.canvasRef} width={300} height={300}></canvas>
+      <canvas 
+        ref={this.canvasRef} 
+        width={300} 
+        height={300}
+        onMouseDown={(event: MouseEvent) => this.props.startDrawing(event.offsetX)}
+        ></canvas>
     )
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
-  isDrawing: state.can
-})
 
-export const CanvasComponent = connect(mapStateToProps)(CanvasComponentRaw)
+export const CanvasComponent = connect(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)
