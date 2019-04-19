@@ -1,4 +1,4 @@
-import React, { Component, RefObject } from 'react'
+import React, { Component, RefObject, createRef } from 'react'
 
 type Props = {
   width?: number,
@@ -10,22 +10,22 @@ type State = {
 }
 
 export default class CanvasComponent extends Component<Props, State> {
-  private canvasRef : RefObject<HTMLCanvasElement>
+    private canvasRef : RefObject<HTMLCanvasElement>
 
     constructor(props : Props){
       super(props);
-      this.canvasRef = React.createRef();
+      this.canvasRef = createRef<HTMLCanvasElement>();
     }
   componentDidMount() {
-      this.updateCanvas();
+    this.updateCanvas();
   }
   componentDidUpdate() {
       this.updateCanvas();
   }
-  updateCanvas() {
-      const canvas = this.canvasRef.current!;
-      const ctx = canvas.getContext('2d')!;
-      ctx!.clearRect(0,0, 300, 300);
+  updateCanvas() : void {
+    const canvas = this.canvasRef.current!
+    const ctx = canvas.getContext('2d')!
+    ctx.clearRect(0, 0, 300, 300);
   }
     render() {
       return (
