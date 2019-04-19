@@ -9,7 +9,7 @@ type State = {
 
 }
 
-export default class CanvasComponent extends Component<Props, State> {
+export default class CanvasComponentRaw extends Component<Props, State> {
   private canvasRef : RefObject<HTMLCanvasElement>
 
   constructor(props : Props){
@@ -22,16 +22,21 @@ export default class CanvasComponent extends Component<Props, State> {
   
   componentDidMount() {
     this.updateCanvas();
-    const {ctx} = this
-    ctx().strokeStyle = "#BADA55";
-    ctx().lineJoin = "round";
-    ctx().lineCap = "round";
+    const ctx = this.ctx()
+    ctx.strokeStyle = "#BADA55";
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 2;
   }
   componentDidUpdate() {
     this.updateCanvas();
   }
-  updateCanvas() : void {
-    this.canvas()
+  updateCanvas = () : void => {
+    
+  }
+  draw = (event: MouseEvent) : void => {
+    let ctx = this.ctx();
+
   }
   render() {
     return (
