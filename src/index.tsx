@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/App';
+import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker';
+
+const AppWithStore = () => 
+    <Provider store={store}>
+
+    </Provider>
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

@@ -7,9 +7,11 @@
     "@types/node": "11.13.4",
     "@types/react": "16.8.13",
     "@types/react-dom": "16.8.4",
+    "@types/react-redux": "^7.0.7",
     "react": "^16.8.6",
     "react-color": "^2.17.0",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
     "react-scripts": "2.1.8",
     "typescript": "3.4.3"
   },
@@ -29,6 +31,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "redux-devtools": "^3.5.0",
+    "redux-devtools-extension": "^2.13.8",
     "redux-immutable-state-invariant": "^2.1.0",
     "typesafe-actions": "^4.0.0"
   }
