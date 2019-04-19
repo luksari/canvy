@@ -1,4 +1,6 @@
 import React, { Component, RefObject, createRef } from 'react'
+import { connect } from 'react-redux';
+import { RootState } from 'MyTypes';
 
 type Props = {
   width?: number,
@@ -9,7 +11,8 @@ type State = {
 
 }
 
-export default class CanvasComponentRaw extends Component<Props, State> {
+
+class CanvasComponentRaw extends Component<Props, State> {
   private canvasRef : RefObject<HTMLCanvasElement>
 
   constructor(props : Props){
@@ -44,3 +47,9 @@ export default class CanvasComponentRaw extends Component<Props, State> {
     )
   }
 }
+
+const mapStateToProps = (state: RootState) => ({
+  isDrawing: state.can
+})
+
+export const CanvasComponent = connect(mapStateToProps)(CanvasComponentRaw)
