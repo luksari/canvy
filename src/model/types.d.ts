@@ -1,5 +1,5 @@
 declare module 'MyModels' {
-   export type Point = {
+   export interface Point {
        offsetX: number,
        offsetY: number
    }
