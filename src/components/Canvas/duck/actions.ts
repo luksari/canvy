@@ -5,8 +5,8 @@ import { Point } from 'MyModels';
 
 export const startDrawing = createStandardAction(START_DRAWING)
     .map(
-        (prevPoint : Point) => ({
-            payload: { prevPoint, isDrawing: true }
+        () => ({
+            payload: { isDrawing: true }
         })
     );
 export const drawing = createStandardAction(DRAWING)
@@ -17,7 +17,7 @@ export const drawing = createStandardAction(DRAWING)
     )
 export const endDrawing = createStandardAction(END_DRAWING)
     .map(
-        (prevPoint : Point) => ({
-            payload: { prevPoint, isDrawing: false }
+        () => ({
+            payload: { isDrawing: false }
         })
     );
