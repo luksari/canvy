@@ -1,7 +1,7 @@
 import { createStandardAction } from 'typesafe-actions';
 
-import { START_DRAWING, END_DRAWING, DRAWING } from './constants'
-import { Point } from 'MyModels';
+import { START_DRAWING, END_DRAWING, DRAWING, CREATE_LINE } from './constants'
+import { Point, Line } from 'MyModels';
 
 export const startDrawing = createStandardAction(START_DRAWING)
     .map(
@@ -21,3 +21,9 @@ export const endDrawing = createStandardAction(END_DRAWING)
             payload: { prevPoint, isDrawing: false }
         })
     );
+export const createLine = createStandardAction(CREATE_LINE)
+        .map(
+            (line: Line) => ({
+                payload: { line }
+            })
+        )

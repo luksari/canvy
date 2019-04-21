@@ -4,12 +4,13 @@ import { RootAction } from 'MyTypes';
 import { ActionType } from 'typesafe-actions';
 import * as constants from './constants'
 import * as canvas from './actions';
-import { Point } from 'MyModels';
+import { Point, Line } from 'MyModels';
 
 
 export type CanvasState = {
     isDrawing: boolean,
-    prevPoint: Point 
+    prevPoint: Point,
+    lines: Array<Line>
 
 }
 export type CanvasAction = ActionType<typeof canvas>
@@ -37,6 +38,15 @@ export const canvasReducer = combineReducers<CanvasState, RootAction>({
                 return action.payload.prevPoint
             case END_DRAWING:
                 return action.payload.prevPoint
+            default:
+                return state
+        }
+    },
+    lines: (state: Array<Line> = [], action : CanvasAction) => {
+        const {  CREATE_LINE } = constants
+        switch(action.type) {
+            case CREATE_LINE:
+                return [...state, action.payload.line]
             default:
                 return state
         }

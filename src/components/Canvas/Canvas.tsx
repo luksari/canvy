@@ -8,12 +8,15 @@ import { Point } from 'MyModels';
 const mapDispatchToProps = {
   startDrawing: canvasActions.startDrawing,
   drawing: canvasActions.drawing,
-  endDrawing: canvasActions.endDrawing
+  endDrawing: canvasActions.endDrawing,
+  createLine: canvasActions.createLine
+
 }
 
 const mapStateToProps = (state: RootState) => ({
   prevPoint: state.canvasReducer.prevPoint,
-  isDrawing: state.canvasReducer.isDrawing
+  isDrawing: state.canvasReducer.isDrawing,
+  lines: state.canvasReducer.lines
 })
 
 
@@ -36,7 +39,7 @@ class CanvasComponentRaw extends Component<Props, State> {
   ctx = () : CanvasRenderingContext2D => this.canvas().getContext('2d')!
   
   componentDidMount() {
-    this.updateCanvas();
+    
     const ctx = this.ctx()
     ctx.strokeStyle = "#BADA55";
     ctx.lineJoin = "round";
@@ -44,10 +47,12 @@ class CanvasComponentRaw extends Component<Props, State> {
     ctx.lineWidth = 2;
   }
   componentDidUpdate() {
-    this.updateCanvas();
+   
   }
-  updateCanvas = () : void => {
-    
+  renderCanvas = ({lines} : Props) : void => {
+    const ctx = this.ctx();
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
   }
   draw = (event: MouseEvent) : void => {
     let ctx = this.ctx();
@@ -73,7 +78,11 @@ class CanvasComponentRaw extends Component<Props, State> {
         onMouseDown={(event: MouseEvent) => {this.props.startDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
         onMouseMove={(event: MouseEvent) => {this.draw(event)}}
         onMouseUp={(event: MouseEvent) => {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
-        onMouseLeave={(event: MouseEvent) => {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
+        onMouseLeave={(event: MouseEvent) => 
+          {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})
+          this.props.createLine()
+        }
+      }
         ></canvas>
     )
   }
