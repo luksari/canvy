@@ -8,8 +8,9 @@ import * as canvas from './actions';
 
 export type CanvasState = {
     isDrawing: boolean,
-    // @TODO refactor lines to own model
-    // lines: Array<Array<Position>>
+    prevX: number,
+    prevY: number
+
 }
 export type CanvasAction = ActionType<typeof canvas>
 
@@ -24,10 +25,33 @@ export const canvasReducer = combineReducers<CanvasState, RootAction>({
             case END_DRAWING:
                 return action.payload.isDrawing
             default:
+                return state
+        }
+    },
+    prevX: (state: number = 0, action: CanvasAction) => {
+        const { START_DRAWING, DRAWING, END_DRAWING } = constants
+        switch(action.type) {
+            case START_DRAWING:
+                return action.payload.prevX
+            case DRAWING:
+                return action.payload.prevX
+            case END_DRAWING:
+                return action.payload.prevX
+            default:
                 return state;
         }
     },
-    // lines: (state = [], action) => {
-
-    // }
+    prevY: (state: number = 0, action: CanvasAction) => {
+        const { START_DRAWING, DRAWING, END_DRAWING } = constants
+        switch(action.type) {
+            case START_DRAWING:
+                return action.payload.prevY
+            case DRAWING:
+                return action.payload.prevY
+            case END_DRAWING:
+                return action.payload.prevY
+            default:
+                return state
+        }
+    }
 })

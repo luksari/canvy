@@ -12,6 +12,8 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state: RootState) => ({
+  prevX: state.canvasReducer.prevX,
+  prevY: state.canvasReducer.prevY,
   isDrawing: state.canvasReducer.isDrawing
 })
 
@@ -50,6 +52,14 @@ class CanvasComponentRaw extends Component<Props, State> {
   }
   draw = (event: MouseEvent) : void => {
     let ctx = this.ctx();
+    if(this.props.isDrawing){
+      ctx.beginPath()
+      ctx.moveTo(this.props.prevX, this.props.prevY);
+      ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY)
+      ctx.stroke();
+      this.props.drawing(event.nativeEvent.offsetX, event.nativeEvent.offsetY)
+    }
+
 
   }
   render() {
@@ -59,21 +69,16 @@ class CanvasComponentRaw extends Component<Props, State> {
         width={300} 
         height={300}
         onMouseDown={(event: MouseEvent) => {
-          const point : Point = {offsetX: event.clientX, offsetY: event.clientY}
-          this.props.startDrawing(point)}}
+          this.props.startDrawing(event.nativeEvent.offsetX, event.nativeEvent.offsetY)}}
         onMouseMove={(event: MouseEvent) => {
-          const point : Point = {offsetX: event.clientX, offsetY: event.clientY}
-          this.props.drawing(point)}}
-        onMouseUp={(event: MouseEvent) => {
-          const point : Point = {offsetX: event.clientX, offsetY: event.clientY}
-          this.props.endDrawing(point)}}
+          this.draw(event)}}
+        onMouseUp={(event: MouseEvent) => {   
+          this.props.endDrawing(event.nativeEvent.offsetX, event.nativeEvent.offsetY)}}
         onMouseLeave={(event: MouseEvent) => {
-          const point : Point = {offsetX: event.clientX, offsetY: event.clientY}
-          this.props.endDrawing(point)}}
+          this.props.endDrawing(event.nativeEvent.offsetX, event.nativeEvent.offsetY)}}
         ></canvas>
     )
   }
 }
-
 
 export const CanvasComponent = connect(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)
