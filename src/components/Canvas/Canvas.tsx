@@ -70,10 +70,10 @@ class CanvasComponentRaw extends Component<Props, State> {
         ref={this.canvasRef} 
         width={300} 
         height={300}
-        onMouseDown={(event: MouseEvent) => {this.props.startDrawing()}}
+        onMouseDown={(event: MouseEvent) => {this.props.startDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
         onMouseMove={(event: MouseEvent) => {this.draw(event)}}
-        onMouseUp={(event: MouseEvent) => {this.props.endDrawing()}}         
-        onMouseLeave={(event: MouseEvent) => {this.props.endDrawing()}}
+        onMouseUp={(event: MouseEvent) => {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
+        onMouseLeave={(event: MouseEvent) => {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
         ></canvas>
     )
   }
