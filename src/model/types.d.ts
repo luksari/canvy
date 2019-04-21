@@ -1,6 +1,10 @@
 declare module 'MyModels' {
    export interface Point {
-       offsetX: number,
-       offsetY: number
+       x: number,
+       y: number
+   }
+
+   export interface Line {
+        points: Array<Point>
    }
 }
