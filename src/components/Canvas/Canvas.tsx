@@ -1,33 +1,42 @@
 import React, { Component, RefObject, createRef, MouseEvent } from 'react'
 import { connect } from 'react-redux';
-import { RootState, RootAction } from 'MyTypes';
-import { canvasActions } from './duck';
+import { RootState } from 'MyTypes';
 import { Point } from 'MyModels';
+import { startDrawing, drawing, endDrawing, createLine, addLine } from './duck/actions';
 
+interface stateFromProps {
+  prevPoint: Point,
+  isDrawing: boolean,
+  currentLine: Array<Point>,
+  lines: Array<Array<Point>>
+}
+interface dispachFromProps {
+  startDrawing: (point: Point) => void
+  drawing: (point: Point) => void,
+  endDrawing: (point: Point) => void,
+  createLine: (point: Point) => void,
+  addLine: (line: Array<Point>) => void,
+}
 
-const mapDispatchToProps = ( { canvasActions } : RootAction) => ({
-  startDrawing: canvasActions.startDrawing,
-  drawing: canvasActions.drawing,
-  endDrawing: canvasActions.endDrawing,
-  createLine: canvasActions.createLine,
-  addLine: canvasActions.addLine,
-})
+const mapDispatchToProps = {
+  startDrawing,
+  drawing,
+  endDrawing,
+  createLine,
+  addLine
+}
 
 const mapStateToProps = ( { canvasReducer } : RootState) => ({
   prevPoint: canvasReducer.prevPoint,
   isDrawing: canvasReducer.isDrawing,
+  currentLine: canvasReducer.currentLine,
   lines: canvasReducer.lines
 })
 
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = stateFromProps & dispachFromProps;
 
-type State = {
-
-}
-
-
-class CanvasComponentRaw extends Component<Props, State> {
+class CanvasComponentRaw extends Component<Props, {}> {
   private canvasRef : RefObject<HTMLCanvasElement>
 
   constructor(props : Props){
@@ -49,26 +58,35 @@ class CanvasComponentRaw extends Component<Props, State> {
   componentDidUpdate() {
    
   }
-
-  renderCanvas = ({lines} : Props) : void => {
+  // Function responsible for rendering current state of Canvas
+  renderCanvas = ({ lines } : Props) : void => {
     const ctx = this.ctx();
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
   }
-
+  // Drawing function
   draw = (event: MouseEvent) : void => {
     let ctx = this.ctx();
-    if(this.props.isDrawing){
-      const {offsetX, offsetY} = event.nativeEvent
-      const {prevPoint} = this.props
+    const { prevPoint, drawing, createLine, isDrawing, currentLine } = this.props
+    if(isDrawing){
+      const { offsetX, offsetY } = event.nativeEvent
+      // Drawing on 2d context @TODO export it to function with @params { color: String, thickness: number }
       ctx.beginPath()
       ctx.moveTo(prevPoint.x, prevPoint.y)
       ctx.lineTo(offsetX, offsetY)
       ctx.stroke();
+      // Dispatch store actions with data 
       let newPoint : Point = {x: offsetX, y: offsetY}
-      this.props.drawing(newPoint)
-
+      drawing(newPoint)
+      createLine(newPoint)
     }
+  }
+  handleStopDrawing = (event: MouseEvent) : void => {
+    const {offsetX, offsetY} = event.nativeEvent
+    const {endDrawing, addLine, currentLine, isDrawing} = this.props
+    endDrawing({x: offsetX, y: offsetY})
+    if(!isDrawing && currentLine.length > 0)
+      addLine(currentLine)
   }
   render() {
     return (
@@ -78,13 +96,12 @@ class CanvasComponentRaw extends Component<Props, State> {
         height={300}
         onMouseDown={(event: MouseEvent) => {this.props.startDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
         onMouseMove={(event: MouseEvent) => {this.draw(event)}}
-        onMouseUp={(event: MouseEvent) => {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
-        onMouseLeave={(event: MouseEvent) => 
-          {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}
-      }
+        onMouseUp={this.handleStopDrawing}
+        onMouseLeave={this.handleStopDrawing}
+          
         ></canvas>
     )
   }
 }
 
-export const CanvasComponent = connect(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)
+export const CanvasComponent = connect<stateFromProps, dispachFromProps, void>(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)

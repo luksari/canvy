@@ -10,10 +10,10 @@ import { Point, Line } from 'MyModels';
 export type CanvasState = {
     isDrawing: boolean,
     prevPoint: Point,
-    currentLine: Line,
-    lines: Array<Line>
-
+    currentLine: Array<Point>,
+    lines: Array<Array<Point>>
 }
+
 export type CanvasAction = ActionType<typeof canvas>
 
 export const canvasReducer = combineReducers<CanvasState, RootAction>({
@@ -43,16 +43,16 @@ export const canvasReducer = combineReducers<CanvasState, RootAction>({
                 return state
         }
     },
-    currentLine: (state: Line = { points: [] }, action : CanvasAction) => {
+    currentLine: (state: Array<Point> = [], action : CanvasAction) => {
         const { CREATE_LINE } = constants
         switch(action.type) {
             case CREATE_LINE:
-                return { points: [...state.points, action.payload.point] }
+                return  [...state, action.payload.point] 
             default:
                 return state
         }
     },
-    lines: (state: Array<Line> = [], action : CanvasAction) => {
+    lines: (state: Array<Array<Point>> = [], action : CanvasAction) => {
         const {  ADD_LINE } = constants
         switch(action.type) {
             case ADD_LINE:

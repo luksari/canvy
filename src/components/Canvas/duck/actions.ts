@@ -29,7 +29,7 @@ export const createLine = createStandardAction(CREATE_LINE)
         )
 export const addLine = createStandardAction(ADD_LINE)
     .map(
-        (line: Line) => ({
+        (line: Array<Point>) => ({
             payload: { line }
         })
 )
