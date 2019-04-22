@@ -10,7 +10,6 @@ const mapDispatchToProps = {
   drawing: canvasActions.drawing,
   endDrawing: canvasActions.endDrawing,
   createLine: canvasActions.createLine
-
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -49,11 +48,13 @@ class CanvasComponentRaw extends Component<Props, State> {
   componentDidUpdate() {
    
   }
+
   renderCanvas = ({lines} : Props) : void => {
     const ctx = this.ctx();
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
   }
+
   draw = (event: MouseEvent) : void => {
     let ctx = this.ctx();
     if(this.props.isDrawing){
@@ -66,8 +67,6 @@ class CanvasComponentRaw extends Component<Props, State> {
       let newPoint : Point = {x: offsetX, y: offsetY}
       this.props.drawing(newPoint)
     }
-
-
   }
   render() {
     return (
@@ -79,9 +78,7 @@ class CanvasComponentRaw extends Component<Props, State> {
         onMouseMove={(event: MouseEvent) => {this.draw(event)}}
         onMouseUp={(event: MouseEvent) => {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
         onMouseLeave={(event: MouseEvent) => 
-          {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})
-          this.props.createLine()
-        }
+          {this.props.endDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}
       }
         ></canvas>
     )
