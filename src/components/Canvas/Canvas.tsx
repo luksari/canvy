@@ -1,21 +1,22 @@
 import React, { Component, RefObject, createRef, MouseEvent } from 'react'
 import { connect } from 'react-redux';
-import { RootState } from 'MyTypes';
+import { RootState, RootAction } from 'MyTypes';
 import { canvasActions } from './duck';
 import { Point } from 'MyModels';
 
 
-const mapDispatchToProps = {
+const mapDispatchToProps = ( { canvasActions } : RootAction) => ({
   startDrawing: canvasActions.startDrawing,
   drawing: canvasActions.drawing,
   endDrawing: canvasActions.endDrawing,
-  createLine: canvasActions.createLine
-}
+  createLine: canvasActions.createLine,
+  addLine: canvasActions.addLine,
+})
 
-const mapStateToProps = (state: RootState) => ({
-  prevPoint: state.canvasReducer.prevPoint,
-  isDrawing: state.canvasReducer.isDrawing,
-  lines: state.canvasReducer.lines
+const mapStateToProps = ( { canvasReducer } : RootState) => ({
+  prevPoint: canvasReducer.prevPoint,
+  isDrawing: canvasReducer.isDrawing,
+  lines: canvasReducer.lines
 })
 
 
@@ -66,6 +67,7 @@ class CanvasComponentRaw extends Component<Props, State> {
       ctx.stroke();
       let newPoint : Point = {x: offsetX, y: offsetY}
       this.props.drawing(newPoint)
+
     }
   }
   render() {
