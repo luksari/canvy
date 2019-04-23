@@ -18,14 +18,12 @@ export type CanvasAction = ActionType<typeof canvas>
 
 export const canvasReducer = combineReducers<CanvasState, RootAction>({
     isDrawing: (state : boolean = false, action : CanvasAction) => {
-        const { START_DRAWING, DRAWING, END_DRAWING } = constants
+        const { START_DRAWING, END_DRAWING } = constants
         switch(action.type) {
             case START_DRAWING:
-                return action.payload.isDrawing
-            case DRAWING:
-                return action.payload.isDrawing
+                return true
             case END_DRAWING:
-                return action.payload.isDrawing
+                return false
             default:
                 return state
         }

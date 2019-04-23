@@ -51,13 +51,37 @@ class CanvasComponentRaw extends Component<Props, {}> {
 
   }
   componentDidUpdate() {
-   
+
   }
   // Function responsible for rendering current state of Canvas
-  renderCanvas = ({ lines } : Props) : void => {
+  renderCanvas = (event: MouseEvent) : void => {
+    const { lines } = this.props
+
     const ctx = this.ctx();
-    ctx.fillStyle = '#FFF';
+    ctx.lineWidth = 2;
+    ctx.fillStyle = "#FFF"
     ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
+    // lines.forEach((line : Array<Point>) => {
+    //   ctx.beginPath();
+    //   line.forEach((point: Point, index: number) => {
+    //     let nextPoint = (index < line.length-1) ? line[index+1] : undefined
+    //     if(typeof nextPoint !== 'undefined'){
+    //       ctx.moveTo(point.x, point.y)
+    //       console.log('MOVE TO: ',JSON.stringify(point));
+    //       ctx.lineTo(nextPoint.x, nextPoint.y)
+    //       console.log('LINE TO: ',JSON.stringify(nextPoint));
+    //     }
+    //   })
+    //   console.log("NEW LINE")
+    //   ctx.stroke()
+    // })
+
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    ctx.lineTo(25, 25)
+    ctx.moveTo(100, 100)
+    ctx.lineTo(125, 125)
+    ctx.stroke()
   }
   // Drawing function
   draw = (event: MouseEvent) : void => {
@@ -80,7 +104,7 @@ class CanvasComponentRaw extends Component<Props, {}> {
     const {offsetX, offsetY} = event.nativeEvent
     const {endDrawing, addLine, currentLine, isDrawing} = this.props
     endDrawing({x: offsetX, y: offsetY})
-    if(!isDrawing && currentLine.length > 0)
+    if(currentLine.length > 0)
       addLine(currentLine)
   }
   handleStartDrawing = (event: MouseEvent) : void => {
@@ -96,17 +120,20 @@ class CanvasComponentRaw extends Component<Props, {}> {
 
   }
   render() {
-    const {canvasRef, handleStartDrawing, handleStopDrawing, draw} = this
+    const {canvasRef, handleStartDrawing, handleStopDrawing, draw, renderCanvas} = this
     return (
-      <canvas 
-        ref={canvasRef} 
-        width={window.innerWidth} 
-        height={window.innerHeight}
-        onMouseDown={handleStartDrawing}
-        onMouseMove={draw}
-        onMouseUp={handleStopDrawing}
-        onMouseLeave={handleStopDrawing}
-        ></canvas>
+      <>
+        <canvas 
+          ref={canvasRef} 
+          width={window.innerWidth - 50} 
+          height={window.innerHeight - 50}
+          onMouseDown={handleStartDrawing}
+          onMouseMove={draw}
+          onMouseUp={handleStopDrawing}
+          // onMouseLeave={handleStopDrawing}
+        />
+        <button onClick={renderCanvas}>REFRESH</button>
+      </>
     )
   }
 }
