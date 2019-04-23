@@ -48,12 +48,7 @@ class CanvasComponentRaw extends Component<Props, {}> {
   ctx = () : CanvasRenderingContext2D => this.canvas().getContext('2d')!
   
   componentDidMount() {
-    
-    const ctx = this.ctx()
-    ctx.strokeStyle = "#BADA55";
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-    ctx.lineWidth = 2;
+
   }
   componentDidUpdate() {
    
@@ -67,7 +62,7 @@ class CanvasComponentRaw extends Component<Props, {}> {
   // Drawing function
   draw = (event: MouseEvent) : void => {
     let ctx = this.ctx();
-    const { prevPoint, drawing, createLine, isDrawing, currentLine } = this.props
+    const { prevPoint, drawing, createLine, isDrawing } = this.props
     if(isDrawing){
       const { offsetX, offsetY } = event.nativeEvent
       // Drawing on 2d context @TODO export it to function with @params { color: String, thickness: number }
@@ -88,17 +83,29 @@ class CanvasComponentRaw extends Component<Props, {}> {
     if(!isDrawing && currentLine.length > 0)
       addLine(currentLine)
   }
+  handleStartDrawing = (event: MouseEvent) : void => {
+    const { offsetX, offsetY } = event.nativeEvent
+    const { startDrawing } = this.props
+    startDrawing({x: offsetX, y: offsetY});
+    // Part of config current drawn line    
+    const ctx = this.ctx()
+    ctx.strokeStyle = "#BADA55";
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 2;
+
+  }
   render() {
+    const {canvasRef, handleStartDrawing, handleStopDrawing, draw} = this
     return (
       <canvas 
-        ref={this.canvasRef} 
-        width={300} 
-        height={300}
-        onMouseDown={(event: MouseEvent) => {this.props.startDrawing({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY})}}
-        onMouseMove={(event: MouseEvent) => {this.draw(event)}}
-        onMouseUp={this.handleStopDrawing}
-        onMouseLeave={this.handleStopDrawing}
-          
+        ref={canvasRef} 
+        width={window.innerWidth} 
+        height={window.innerHeight}
+        onMouseDown={handleStartDrawing}
+        onMouseMove={draw}
+        onMouseUp={handleStopDrawing}
+        onMouseLeave={handleStopDrawing}
         ></canvas>
     )
   }
