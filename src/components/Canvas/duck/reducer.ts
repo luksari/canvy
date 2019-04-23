@@ -4,7 +4,7 @@ import { RootAction } from 'MyTypes';
 import { ActionType } from 'typesafe-actions';
 import * as constants from './constants'
 import * as canvas from './actions';
-import { Point, Line } from 'MyModels';
+import { Point } from 'MyModels';
 
 
 export type CanvasState = {
