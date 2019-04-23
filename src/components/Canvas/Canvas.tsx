@@ -58,30 +58,19 @@ class CanvasComponentRaw extends Component<Props, {}> {
     const { lines } = this.props
 
     const ctx = this.ctx();
-    ctx.lineWidth = 2;
     ctx.fillStyle = "#FFF"
     ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
-    // lines.forEach((line : Array<Point>) => {
-    //   ctx.beginPath();
-    //   line.forEach((point: Point, index: number) => {
-    //     let nextPoint = (index < line.length-1) ? line[index+1] : undefined
-    //     if(typeof nextPoint !== 'undefined'){
-    //       ctx.moveTo(point.x, point.y)
-    //       console.log('MOVE TO: ',JSON.stringify(point));
-    //       ctx.lineTo(nextPoint.x, nextPoint.y)
-    //       console.log('LINE TO: ',JSON.stringify(nextPoint));
-    //     }
-    //   })
-    //   console.log("NEW LINE")
-    //   ctx.stroke()
-    // })
-
-    ctx.beginPath()
-    ctx.moveTo(0, 0)
-    ctx.lineTo(25, 25)
-    ctx.moveTo(100, 100)
-    ctx.lineTo(125, 125)
-    ctx.stroke()
+    lines.forEach((line : Array<Point>) => {
+      line.forEach((point: Point, index: number) => {
+        let prevPoint = index > 0 ? line[index-1] : undefined
+        if(typeof prevPoint !== 'undefined'){
+          ctx.beginPath();
+          ctx.moveTo(prevPoint.x, prevPoint.y)
+          ctx.lineTo(point.x, point.y)
+          ctx.stroke()
+        }
+      })
+    })
   }
   // Drawing function
   draw = (event: MouseEvent) : void => {
@@ -102,7 +91,7 @@ class CanvasComponentRaw extends Component<Props, {}> {
   }
   handleStopDrawing = (event: MouseEvent) : void => {
     const {offsetX, offsetY} = event.nativeEvent
-    const {endDrawing, addLine, currentLine, isDrawing} = this.props
+    const {endDrawing, addLine, currentLine} = this.props
     endDrawing({x: offsetX, y: offsetY})
     if(currentLine.length > 0)
       addLine(currentLine)

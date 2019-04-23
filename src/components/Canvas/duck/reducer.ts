@@ -42,10 +42,12 @@ export const canvasReducer = combineReducers<CanvasState, RootAction>({
         }
     },
     currentLine: (state: Array<Point> = [], action : CanvasAction) => {
-        const { CREATE_LINE } = constants
+        const { CREATE_LINE, START_DRAWING } = constants
         switch(action.type) {
             case CREATE_LINE:
                 return  [...state, action.payload.point] 
+            case START_DRAWING:
+                return []
             default:
                 return state
         }
