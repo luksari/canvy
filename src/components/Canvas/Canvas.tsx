@@ -107,11 +107,11 @@ class CanvasComponentRaw extends Component<Props, {}> {
     ctx.lineCap = "round";
     ctx.lineWidth = 2;
 
+    
   }
   render() {
     const {canvasRef, handleStartDrawing, handleStopDrawing, draw, renderCanvas} = this
     return (
-      <>
         <canvas 
           ref={canvasRef} 
           width={window.innerWidth - 50} 
@@ -121,8 +121,6 @@ class CanvasComponentRaw extends Component<Props, {}> {
           onMouseUp={handleStopDrawing}
           // onMouseLeave={handleStopDrawing}
         />
-        <button onClick={renderCanvas}>REFRESH</button>
-      </>
     )
   }
 }
