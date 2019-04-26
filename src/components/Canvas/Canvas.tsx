@@ -1,4 +1,4 @@
-import React, { Component, RefObject, createRef, MouseEvent } from 'react'
+import React, { Component, RefObject, createRef, MouseEvent, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
 import { Point } from 'MyModels';
@@ -36,30 +36,49 @@ const mapStateToProps = ( { canvasReducer } : RootState) => ({
 
 type Props = stateFromProps & dispachFromProps;
 
-class CanvasComponentRaw extends Component<Props, {}> {
-  private canvasRef : RefObject<HTMLCanvasElement>
 
-  constructor(props : Props){
-    super(props);
-    this.canvasRef = createRef<HTMLCanvasElement>();
-  }
+const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, lines, startDrawing, drawing, endDrawing, createLine, addLine} : Props) => {
+  let canvasRef = createRef<HTMLCanvasElement>();
 
-  canvas = () : HTMLCanvasElement => this.canvasRef.current!
-  ctx = () : CanvasRenderingContext2D => this.canvas().getContext('2d')!
+  const canvas = () : HTMLCanvasElement => canvasRef.current!;
+  const context = () : CanvasRenderingContext2D => canvas().getContext('2d')!;
   
-  componentDidMount() {
-
+  const handleStartDrawing = (event: MouseEvent) => {
+    const { offsetX, offsetY } = event.nativeEvent
+    startDrawing({x: offsetX, y: offsetY});
+    // Part of config current drawn line    
+    const ctx = context()
+    ctx.strokeStyle = "#BADA55";
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 2;
   }
-  componentDidUpdate() {
-
+  const handleStopDrawing = (event: MouseEvent) : void => {
+    const {offsetX, offsetY} = event.nativeEvent
+    endDrawing({x: offsetX, y: offsetY})
+    if(currentLine.length > 0)
+      addLine(currentLine)
   }
-  // Function responsible for rendering current state of Canvas
-  renderCanvas = (event: MouseEvent) : void => {
-    const { lines } = this.props
-
-    const ctx = this.ctx();
+   // Drawing function
+  const draw = (event: MouseEvent) : void => {
+    let ctx = context();
+    if(isDrawing){
+      const { offsetX, offsetY } = event.nativeEvent
+      // Drawing on 2d context @TODO export it to function with @params { color: String, thickness: number }
+      ctx.beginPath()
+      ctx.moveTo(prevPoint.x, prevPoint.y)
+      ctx.lineTo(offsetX, offsetY)
+      ctx.stroke();
+      // Dispatch store actions with data 
+      let newPoint : Point = {x: offsetX, y: offsetY}
+      drawing(newPoint)
+      createLine(newPoint)
+    } 
+  }
+  const renderCanvas = (event: MouseEvent) : void => {
+    const ctx = context();
     ctx.fillStyle = "#FFF"
-    ctx.fillRect(0, 0, this.canvasRef.current!.width, this.canvasRef.current!.height);
+    ctx.fillRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
     lines.forEach((line : Array<Point>) => {
       line.forEach((point: Point, index: number) => {
         let prevPoint = index > 0 ? line[index-1] : undefined
@@ -72,57 +91,19 @@ class CanvasComponentRaw extends Component<Props, {}> {
       })
     })
   }
-  // Drawing function
-  draw = (event: MouseEvent) : void => {
-    let ctx = this.ctx();
-    const { prevPoint, drawing, createLine, isDrawing } = this.props
-    if(isDrawing){
-      const { offsetX, offsetY } = event.nativeEvent
-      // Drawing on 2d context @TODO export it to function with @params { color: String, thickness: number }
-      ctx.beginPath()
-      ctx.moveTo(prevPoint.x, prevPoint.y)
-      ctx.lineTo(offsetX, offsetY)
-      ctx.stroke();
-      // Dispatch store actions with data 
-      let newPoint : Point = {x: offsetX, y: offsetY}
-      drawing(newPoint)
-      createLine(newPoint)
-    }
-  }
-  handleStopDrawing = (event: MouseEvent) : void => {
-    const {offsetX, offsetY} = event.nativeEvent
-    const {endDrawing, addLine, currentLine} = this.props
-    endDrawing({x: offsetX, y: offsetY})
-    if(currentLine.length > 0)
-      addLine(currentLine)
-  }
-  handleStartDrawing = (event: MouseEvent) : void => {
-    const { offsetX, offsetY } = event.nativeEvent
-    const { startDrawing } = this.props
-    startDrawing({x: offsetX, y: offsetY});
-    // Part of config current drawn line    
-    const ctx = this.ctx()
-    ctx.strokeStyle = "#BADA55";
-    ctx.lineJoin = "round";
-    ctx.lineCap = "round";
-    ctx.lineWidth = 2;
+  
 
-    
-  }
-  render() {
-    const {canvasRef, handleStartDrawing, handleStopDrawing, draw, renderCanvas} = this
-    return (
-        <canvas 
-          ref={canvasRef} 
-          width={window.innerWidth - 50} 
-          height={window.innerHeight - 50}
-          onMouseDown={handleStartDrawing}
-          onMouseMove={draw}
-          onMouseUp={handleStopDrawing}
-          // onMouseLeave={handleStopDrawing}
-        />
-    )
-  }
+  return (
+    <canvas 
+    ref={canvasRef} 
+    width={window.innerWidth - 50} 
+    height={window.innerHeight - 50}
+    onMouseDown={handleStartDrawing}
+    onMouseMove={draw}
+    onMouseUp={handleStopDrawing}
+    // onMouseLeave={handleStopDrawing}
+  />
+  )
 }
 
 export const CanvasComponent = connect<stateFromProps, dispachFromProps, void>(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)
