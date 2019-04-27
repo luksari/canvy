@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { selectColor, selectThickness } from './duck/actions'
 import { ToolbarState } from './duck/reducer';
-import { SketchPicker } from 'react-color'
 import styled from 'styled-components';
+import ColorPicker from '../../components/ColorPicker';
 
 
 
@@ -26,7 +26,7 @@ const ToolbarContainer = styled.div`
 
 const ToolbarRaw : React.FunctionComponent<Props> = () => (
     <ToolbarContainer>
-       <SketchPicker />
+       <ColorPicker/>
     </ToolbarContainer>
 )
 
