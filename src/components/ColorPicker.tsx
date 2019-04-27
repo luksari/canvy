@@ -5,21 +5,23 @@ import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
 import { selectColor } from '../containers/Toolbar/duck/actions';
 
+const Container = styled.div`
+    position: relative;
+`
 
 const Swatch = styled.div`
-    width: 30%;
+    width: 150px;
     padding: 10px;
-    height: 30px;
-    background: #F4F4F4;
+    height: 45px;
+    background: #FFFFFF;
     border-radius: 2px;
-    display: flex;
-    justify-content: center;
+    display: inline-block;
     box-shadow: 0px 4px 5px 0px rgba(173,173,173,0.59);
     cursor: pointer;
 `
 
 const ColorDiv = styled.div`
-    width: 80%;
+    width: 100%;
     border-radius: 2px;
     height: 100%;
     background: ${ props => props.color };
@@ -57,17 +59,20 @@ const ColorPickerRaw : React.FC<Props> = ({color, selectColor}) => {
         selectColor(color.hex)
     }
 
-    return <>
-        <Swatch onClick={handleClick}>
-            <ColorDiv color={color}/>
-        </Swatch>
-        { isOpened ? 
-            <Popup>
-                <Close onClick={( ) => setisOpened(false)} />
-                <SketchPicker color={color} onChange={handleChange}/>
-            </Popup> : null
-        }
-    </>;
+    return (
+        <Container>
+            <Swatch onClick={handleClick}>
+                <ColorDiv color={color}/>
+            </Swatch>
+            { isOpened ? 
+                <Popup>
+                    <Close onClick={( ) => setisOpened(false)} />
+                    <SketchPicker color={color} onChange={handleChange}/>
+                </Popup> : null
+            }
+        </Container>
+    )
+    
 }
 
 export const ColorPicker = connect(mapStateToProps, mapDispatchToProps)(ColorPickerRaw)
