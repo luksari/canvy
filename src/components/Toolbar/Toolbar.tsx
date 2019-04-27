@@ -1,26 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RootState } from 'MyTypes';
-import { selectThickness } from './duck/actions';
+import { selectColor, selectThickness } from './duck/actions'
+import { ToolbarState } from './duck/reducer';
 
-type stateFromProps = {
-    color: string,
-    thickness: number
-}
-type dispatchFromProps = {
-    selectColor: (color: string) => void,
-    selectThickness: (thickness: number) => void
-}
 
-type Props = stateFromProps & dispatchFromProps
 
-const mapStateToProps = ({ toolbarReducer } : RootState) => ({
+const mapStateToProps = ( toolbarReducer : ToolbarState) => ({
     color: toolbarReducer.color,
     thickness: toolbarReducer.thickness
 })
-const mapDispatchToProps = {
 
+const mapDispatchToProps = {
+    selectColor,
+    selectThickness
 }
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const ToolbarRaw : React.FunctionComponent<Props> = () => (
     <>
@@ -28,4 +23,4 @@ const ToolbarRaw : React.FunctionComponent<Props> = () => (
     </>
 )
 
-export const Toolbar = connect<stateFromProps, dispachFromProps, void>(mapStateToProps, mapDispatchToProps)(ToolbarRaw)
+export const Toolbar = connect(mapStateToProps, mapDispatchToProps)(ToolbarRaw)

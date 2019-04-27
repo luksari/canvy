@@ -1,22 +1,8 @@
-import React, { Component, RefObject, createRef, MouseEvent, useEffect } from 'react'
+import React, { createRef, MouseEvent } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
 import { Point } from 'MyModels';
 import { startDrawing, drawing, endDrawing, createLine, addLine } from './duck/actions';
-
-type stateFromProps = {
-  prevPoint: Point,
-  isDrawing: boolean,
-  currentLine: Array<Point>,
-  lines: Array<Array<Point>>
-}
-type dispachFromProps = {
-  startDrawing: (point: Point) => void
-  drawing: (point: Point) => void,
-  endDrawing: (point: Point) => void,
-  createLine: (point: Point) => void,
-  addLine: (line: Array<Point>) => void,
-}
 
 const mapDispatchToProps = {
   startDrawing,
@@ -33,7 +19,7 @@ const mapStateToProps = ( { canvasReducer } : RootState) => ({
   lines: canvasReducer.lines
 })
 
-type Props = stateFromProps & dispachFromProps;
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, lines, startDrawing, drawing, endDrawing, createLine, addLine} : Props) => {
   let canvasRef = createRef<HTMLCanvasElement>();
@@ -104,4 +90,4 @@ const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPo
   )
 }
 
-export const CanvasComponent = connect<stateFromProps, dispachFromProps, void>(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)
+export const CanvasComponent = connect(mapStateToProps, mapDispatchToProps)(CanvasComponentRaw)
