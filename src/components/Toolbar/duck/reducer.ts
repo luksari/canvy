@@ -1,9 +1,7 @@
 
-import { RootAction, RootState } from 'MyTypes';
 import { ActionType } from 'typesafe-actions';
 import * as constants from './constants'
 import * as toolbar from './actions';
-import { Point } from 'MyModels';
 import { combineReducers } from 'redux';
 
 export type ToolbarState = {
@@ -13,7 +11,7 @@ export type ToolbarState = {
 
 export type ToolbarAction = ActionType<typeof toolbar>
 
-export const toolbarReducer = combineReducers<RootState, RootAction>({
+export const toolbarReducer = combineReducers<ToolbarState, ToolbarAction>({
     color: (state : string = '#BADA55', action : ToolbarAction) => {
         const { SELECT_COLOR } = constants
         switch(action.type){

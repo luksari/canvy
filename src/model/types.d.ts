@@ -3,8 +3,4 @@ declare module 'MyModels' {
        x: number,
        y: number
    }
-
-   export interface Line {
-        points: Array<Point>
-   }
 }

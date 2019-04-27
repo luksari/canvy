@@ -1,11 +1,8 @@
 import { combineReducers } from 'redux';
-
-import { RootAction } from 'MyTypes';
 import { ActionType } from 'typesafe-actions';
 import * as constants from './constants'
 import * as canvas from './actions';
 import { Point } from 'MyModels';
-
 
 export type CanvasState = {
     isDrawing: boolean,
@@ -16,7 +13,7 @@ export type CanvasState = {
 
 export type CanvasAction = ActionType<typeof canvas>
 
-export const canvasReducer = combineReducers<CanvasState, RootAction>({
+export const canvasReducer = combineReducers<CanvasState, CanvasAction>({
     isDrawing: (state : boolean = false, action : CanvasAction) => {
         const { START_DRAWING, END_DRAWING } = constants
         switch(action.type) {

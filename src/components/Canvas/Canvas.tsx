@@ -4,13 +4,13 @@ import { RootState } from 'MyTypes';
 import { Point } from 'MyModels';
 import { startDrawing, drawing, endDrawing, createLine, addLine } from './duck/actions';
 
-interface stateFromProps {
+type stateFromProps = {
   prevPoint: Point,
   isDrawing: boolean,
   currentLine: Array<Point>,
   lines: Array<Array<Point>>
 }
-interface dispachFromProps {
+type dispachFromProps = {
   startDrawing: (point: Point) => void
   drawing: (point: Point) => void,
   endDrawing: (point: Point) => void,
@@ -33,9 +33,7 @@ const mapStateToProps = ( { canvasReducer } : RootState) => ({
   lines: canvasReducer.lines
 })
 
-
 type Props = stateFromProps & dispachFromProps;
-
 
 const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, lines, startDrawing, drawing, endDrawing, createLine, addLine} : Props) => {
   let canvasRef = createRef<HTMLCanvasElement>();
