@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { canvasReducer } from '../components/Canvas/duck/reducer'
-import { toolbarReducer } from '../components/Toolbar/duck/reducer'
+import { canvasReducer } from '../containers/Canvas/duck/reducer'
+import { toolbarReducer } from '../containers/Toolbar/duck/reducer'
 
 
 export default combineReducers({

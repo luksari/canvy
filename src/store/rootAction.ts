@@ -1,5 +1,5 @@
-import * as canvasActions from '../components/Canvas/duck/actions'
-import * as toolbarActions from '../components/Toolbar/duck/actions'
+import * as canvasActions from '../containers/Canvas/duck/actions'
+import * as toolbarActions from '../containers/Toolbar/duck/actions'
 export default {
     // Actions existing in project
     canvas: canvasActions,
