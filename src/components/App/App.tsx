@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled  from 'styled-components'
 import { CanvasComponent } from '../Canvas/Canvas'
+import { Toolbar } from '../Toolbar/Toolbar';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -11,7 +12,7 @@ const AppContainer = styled.div`
 
 const App = () => (
     <AppContainer>
-      
+      <Toolbar />
       <CanvasComponent />
     </AppContainer>
   )

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
 import { Point } from 'MyModels';
 import { startDrawing, drawing, endDrawing, createLine, addLine } from './duck/actions';
+import styled from 'styled-components';
 
 const mapDispatchToProps = {
   startDrawing,
@@ -20,6 +21,10 @@ const mapStateToProps = ( { canvasReducer } : RootState) => ({
 })
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+
+const StyledCanvas = styled.canvas`
+  border: 1px solid black;
+`
 
 const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, lines, startDrawing, drawing, endDrawing, createLine, addLine} : Props) => {
   let canvasRef = createRef<HTMLCanvasElement>();
@@ -78,14 +83,14 @@ const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPo
   
 
   return (
-    <canvas 
+    <StyledCanvas 
     ref={canvasRef} 
     width={window.innerWidth - 50} 
     height={window.innerHeight - 50}
     onMouseDown={handleStartDrawing}
     onMouseMove={draw}
     onMouseUp={handleStopDrawing}
-    // onMouseLeave={handleStopDrawing}
+    onMouseLeave={handleStopDrawing}
   />
   )
 }

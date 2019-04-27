@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { selectColor, selectThickness } from './duck/actions'
 import { ToolbarState } from './duck/reducer';
+import { SketchPicker } from 'react-color'
+import styled from 'styled-components';
 
 
 
@@ -17,10 +19,15 @@ const mapDispatchToProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
+const ToolbarContainer = styled.div`
+    width: 100%;
+    display: flex;
+`
+
 const ToolbarRaw : React.FunctionComponent<Props> = () => (
-    <>
-        <p>TOOLBAR</p>
-    </>
+    <ToolbarContainer>
+       <SketchPicker />
+    </ToolbarContainer>
 )
 
 export const Toolbar = connect(mapStateToProps, mapDispatchToProps)(ToolbarRaw)
