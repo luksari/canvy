@@ -6,16 +6,19 @@ import { RootState } from 'MyTypes';
 import { selectColor } from '../containers/Toolbar/duck/actions';
 
 const Wrapper = styled.div`
-    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
 `
 
 const Swatch = styled.div`
-    width: 150px;
+    width: 100%;
+    max-width: 150px;
     padding: 10px;
     height: 45px;
     background: #FFFFFF;
     border-radius: 2px;
-    display: inline-block;
     box-shadow: 0px 4px 5px 0px rgba(173,173,173,0.59);
     cursor: pointer;
 `

@@ -7,19 +7,20 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    width: 100%;
+    height: 100%;
     align-items: center;
 `
 const StyledValue = styled.p`
-    font-size: 2rem;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 3rem;
     font-weight: bold;
     margin-left: 10px;
 `
 const StyledInput = styled.input`
     -webkit-appearance: none;
     background-color: #bdc3c7;
-    width: 300px;
+    width: 100%;
     height: 5px;
     border-radius: 5px;
     outline: 0;

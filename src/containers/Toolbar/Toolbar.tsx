@@ -20,8 +20,9 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const ToolbarContainer = styled.div`
     width: 100%;
+    height: 20%;
     display: flex;
-    margin: 10px 0 10px 0;
+    justify-content: space-between;
 `
 
 const ToolbarRaw : React.FunctionComponent<Props> = () => (

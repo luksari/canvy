@@ -23,7 +23,9 @@ const mapStateToProps = ( { canvasReducer } : RootState) => ({
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const StyledCanvas = styled.canvas`
-  border: 1px solid black;
+  box-shadow: 2px solid black;
+  width: 100%;
+  height: 100%;
 `
 
 const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, lines, startDrawing, drawing, endDrawing, createLine, addLine} : Props) => {
@@ -85,8 +87,6 @@ const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPo
   return (
     <StyledCanvas 
     ref={canvasRef} 
-    width={window.innerWidth - 50} 
-    height={window.innerHeight - 50}
     onMouseDown={handleStartDrawing}
     onMouseMove={draw}
     onMouseUp={handleStopDrawing}
