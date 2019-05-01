@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
 import { selectColor } from '../containers/Toolbar/duck/actions';
 
-const Container = styled.div`
+const Wrapper = styled.div`
     position: relative;
 `
 
@@ -60,7 +60,7 @@ const ColorPickerRaw : React.FC<Props> = ({color, selectColor}) => {
     }
 
     return (
-        <Container>
+        <Wrapper>
             <Swatch onClick={handleClick}>
                 <ColorDiv color={color}/>
             </Swatch>
@@ -70,7 +70,7 @@ const ColorPickerRaw : React.FC<Props> = ({color, selectColor}) => {
                     <SketchPicker color={color} onChange={handleChange}/>
                 </Popup> : null
             }
-        </Container>
+        </Wrapper>
     )
     
 }
