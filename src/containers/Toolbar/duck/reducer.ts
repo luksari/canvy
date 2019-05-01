@@ -19,7 +19,7 @@ export const toolbarReducer = combineReducers<ToolbarState, ToolbarAction>({
             default: return state;
         }
     },
-    thickness: (state: number = 3, action: ToolbarAction) => {
+    thickness: (state: number = 1, action: ToolbarAction) => {
         const { SELECT_THICKNESS } = constants
         switch(action.type){
             case SELECT_THICKNESS: return action.payload;

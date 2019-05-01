@@ -4,6 +4,7 @@ import { selectColor, selectThickness } from './duck/actions'
 import { ToolbarState } from './duck/reducer';
 import styled from 'styled-components';
 import {ColorPicker} from '../../components/ColorPicker';
+import { ThicknessPicker } from '../../components/ThicknessPicker';
 
 const mapStateToProps = ( toolbarReducer : ToolbarState) => ({
     color: toolbarReducer.color,
@@ -26,6 +27,7 @@ const ToolbarContainer = styled.div`
 const ToolbarRaw : React.FunctionComponent<Props> = () => (
     <ToolbarContainer>
        <ColorPicker/>
+       <ThicknessPicker/>
     </ToolbarContainer>
 )
 
