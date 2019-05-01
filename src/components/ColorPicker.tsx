@@ -77,5 +77,3 @@ const ColorPickerRaw : React.FC<Props> = ({color, selectColor}) => {
 
 export const ColorPicker = connect(mapStateToProps, mapDispatchToProps)(ColorPickerRaw)
 
-
-export default ColorPicker

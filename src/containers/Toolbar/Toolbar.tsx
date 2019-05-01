@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { selectColor, selectThickness } from './duck/actions'
 import { ToolbarState } from './duck/reducer';
 import styled from 'styled-components';
-import ColorPicker from '../../components/ColorPicker';
+import {ColorPicker} from '../../components/ColorPicker';
 
 const mapStateToProps = ( toolbarReducer : ToolbarState) => ({
     color: toolbarReducer.color,
