@@ -13,49 +13,57 @@ const mapDispatchToProps = {
   addLine
 }
 
-const mapStateToProps = ( { canvasReducer } : RootState) => ({
+const mapStateToProps = ( { canvasReducer, toolbarReducer} : RootState) => ({
   prevPoint: canvasReducer.prevPoint,
   isDrawing: canvasReducer.isDrawing,
   currentLine: canvasReducer.currentLine,
-  lines: canvasReducer.lines
+  thickness: toolbarReducer.thickness,
+  color: toolbarReducer.color
 })
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const StyledCanvas = styled.canvas`
-  box-shadow: 2px solid black;
-  width: 100%;
-  height: 100%;
+  border: 1px solid black;
+  width: 100vw;
+  height: 80vh;
 `
 
-const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, lines, startDrawing, drawing, endDrawing, createLine, addLine} : Props) => {
+const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPoint, currentLine, startDrawing, drawing, endDrawing, createLine, addLine, thickness, color} : Props) => {
   let canvasRef = createRef<HTMLCanvasElement>();
 
   const canvas = () : HTMLCanvasElement => canvasRef.current!;
   const context = () : CanvasRenderingContext2D => canvas().getContext('2d')!;
   
-  const handleStartDrawing = (event: MouseEvent) => {
+  const handleStartDrawing = (event: MouseEvent | TouchEvent) => {
     const { offsetX, offsetY } = event.nativeEvent
     startDrawing({x: offsetX, y: offsetY});
     // Part of config current drawn line    
     const ctx = context()
-    ctx.strokeStyle = "#BADA55";
+    ctx.strokeStyle = color ? color : '#BADA55' ;
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-    ctx.lineWidth = 2;
+    ctx.lineWidth = thickness ? thickness : 2;
   }
-  const handleStopDrawing = (event: MouseEvent) : void => {
+  const handleStopDrawing = (event:  MouseEvent | TouchEvent) : void => {
     const {offsetX, offsetY} = event.nativeEvent
     endDrawing({x: offsetX, y: offsetY})
     if(currentLine.length > 0)
       addLine(currentLine)
   }
    // Drawing function
-  const draw = (event: MouseEvent) : void => {
+  const draw = (event: MouseEvent | TouchEvent) : void => {
     let ctx = context();
-    if(isDrawing){
-      const { offsetX, offsetY } = event.nativeEvent
-      // Drawing on 2d context @TODO export it to function with @params { color: String, thickness: number }
+    let [offsetX, offsetY] : Array<any> = [undefined, undefined]
+    if(event instanceof MouseEvent){
+      const mEvent = event as MouseEvent
+      [offsetX, offsetY] = [mEvent.nativeEvent.offsetX, mEvent.nativeEvent.offsetY]
+    }
+    else if(event instanceof TouchEvent){
+      const tEvent = event as TouchEvent
+      [offsetX, offsetY] = [tEvent.touches[0].clientX, tEvent.touches[0].clientY]
+    }
+    if(isDrawing && offsetX !== undefined && offsetY !== undefined){
       ctx.beginPath()
       ctx.moveTo(prevPoint.x, prevPoint.y)
       ctx.lineTo(offsetX, offsetY)
@@ -66,31 +74,21 @@ const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPo
       createLine(newPoint)
     } 
   }
-  const renderCanvas = (event: MouseEvent) : void => {
-    const ctx = context();
-    ctx.fillStyle = "#FFF"
-    ctx.fillRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
-    lines.forEach((line : Array<Point>) => {
-      line.forEach((point: Point, index: number) => {
-        let prevPoint = index > 0 ? line[index-1] : undefined
-        if(typeof prevPoint !== 'undefined'){
-          ctx.beginPath();
-          ctx.moveTo(prevPoint.x, prevPoint.y)
-          ctx.lineTo(point.x, point.y)
-          ctx.stroke()
-        }
-      })
-    })
-  }
-  
-
+ 
   return (
-    <StyledCanvas 
+    <StyledCanvas
+    height={window.innerHeight}
+    width={window.innerWidth} 
     ref={canvasRef} 
     onMouseDown={handleStartDrawing}
     onMouseMove={draw}
     onMouseUp={handleStopDrawing}
     onMouseLeave={handleStopDrawing}
+    // onTouchStart={handleStartDrawing}
+    // onTouchMove={draw}
+    // onTouchEnd={handleStopDrawing}
+    // onTouchCancel={handleStopDrawing}
+
   />
   )
 }
