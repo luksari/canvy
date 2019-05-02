@@ -1,11 +1,13 @@
-export const eventParser = (event : T) => {
-    let [offsetX, offsetY] : Array<any> = [undefined, undefined]
+import { MouseEvent, TouchEvent } from 'react'
+
+export const eventParser = (event : MouseEvent | TouchEvent) : Array<number> => {
     if(event instanceof MouseEvent){
       const mEvent = event as MouseEvent
-      [offsetX, offsetY] = [mEvent.nativeEvent.offsetX, mEvent.nativeEvent.offsetY]
+      return [mEvent.nativeEvent.offsetX, mEvent.nativeEvent.offsetY]
     }
     else if(event instanceof TouchEvent){
       const tEvent = event as TouchEvent
-      [offsetX, offsetY] = [tEvent.touches[0].clientX, tEvent.touches[0].clientY]
+      return [tEvent.touches[0].clientX, tEvent.touches[0].clientY]
     }
+    return [0,0]
 }
