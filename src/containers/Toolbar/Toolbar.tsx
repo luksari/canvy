@@ -22,7 +22,10 @@ const ToolbarContainer = styled.div`
     width: 100%;
     height: 20%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    background: #F5F5F5;
+    z-index: 2;
+    box-shadow: 0px 0px 5px black;
 `
 
 const ToolbarRaw : React.FunctionComponent<Props> = () => (

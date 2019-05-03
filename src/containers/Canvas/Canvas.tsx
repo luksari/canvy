@@ -1,4 +1,4 @@
-import React, { createRef, MouseEvent, TouchEvent } from 'react'
+import React, { createRef, MouseEvent, TouchEvent, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'MyTypes';
 import { Point } from 'MyModels';
@@ -25,7 +25,6 @@ const mapStateToProps = ( { canvasReducer, toolbarReducer} : RootState) => ({
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 
 const StyledCanvas = styled.canvas`
-  border: 1px solid black;
   width: 100vw;
   height: 80vh;
   position: relative;
@@ -38,6 +37,11 @@ const CanvasComponentRaw : React.FunctionComponent<Props> = ( {isDrawing, prevPo
   const context = () : CanvasRenderingContext2D => canvas().getContext('2d')!;
   const rect = () : ClientRect => canvas().getBoundingClientRect()
   
+
+  useEffect(() => {
+    context().fillStyle = "#FFFFFF"
+    context().fillRect(0, 0, canvas().width, canvas().height)
+  }, [])
   const handleStartDrawing = (event: MouseEvent | TouchEvent) => {
     
     const [offsetX, offsetY] = coordProvider(event, rect())

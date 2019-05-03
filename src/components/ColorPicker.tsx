@@ -7,9 +7,11 @@ import { selectColor } from '../containers/Toolbar/duck/actions';
 
 const Wrapper = styled.div`
     display: flex;
-    width: 100%;
+    width: 50%;
     height: 100%;
     align-items: center;
+    justify-content: center;
+    position: relative;
 `
 
 const Swatch = styled.div`
@@ -32,11 +34,14 @@ const ColorDiv = styled.div`
 
 const Popup = styled.div`
     position: absolute;
-    z-index: 2;
+    z-index: 3; 
+    left: 35%;
+    top: 50%
 `
 
 const Close = styled.div`
     position: fixed;
+    z-index: 0;
     top: 0;
     left: 0;
     right: 0;

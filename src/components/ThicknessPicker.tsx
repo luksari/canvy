@@ -7,13 +7,15 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 80%;
     height: 100%;
     align-items: center;
+    justify-content: center;
+    padding: 10px;
 `
 const StyledValue = styled.p`
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: bold;
     margin-left: 10px;
 `
