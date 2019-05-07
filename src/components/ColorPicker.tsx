@@ -7,10 +7,10 @@ import { selectColor } from '../containers/Toolbar/duck/actions';
 
 const Wrapper = styled.div`
     display: flex;
-    width: 50%;
+    padding: 15px;
+    width: 100%;
     height: 100%;
     align-items: center;
-    justify-content: center;
     position: relative;
 `
 
@@ -29,14 +29,14 @@ const ColorDiv = styled.div`
     width: 100%;
     border-radius: 2px;
     height: 100%;
-    background: ${ props => props.color };
+    background: ${ props => props.color};
 `
 
 const Popup = styled.div`
     position: absolute;
     z-index: 3; 
     left: 35%;
-    top: 50%
+    top: 50%;
 `
 
 const Close = styled.div`
@@ -48,16 +48,17 @@ const Close = styled.div`
     bottom: 0;
 `
 
-const mapStateToProps = ( {toolbarReducer} : RootState ) => ({
-    color: toolbarReducer.color
+const mapStateToProps = ({ toolbarReducer }: RootState) => ({
+    color: toolbarReducer.color,
 })
 
 const mapDispatchToProps = {
-    selectColor
+    selectColor,
 }
 
+
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-const ColorPickerRaw : React.FC<Props> = ({color, selectColor}) => {
+const ColorPickerRaw: React.FC<Props> = ({ color, selectColor }) => {
     const [isOpened, setisOpened] = useState(false)
 
     const handleClick = () => {
@@ -70,18 +71,21 @@ const ColorPickerRaw : React.FC<Props> = ({color, selectColor}) => {
     return (
         <Wrapper>
             <Swatch onClick={handleClick}>
-                <ColorDiv color={color}/>
+                <ColorDiv color={color} />
             </Swatch>
-            { isOpened ? 
+            {isOpened ?
                 <Popup>
-                    <Close onClick={( ) => setisOpened(false)} />
-                    <SketchPicker color={color} onChange={handleChange}/>
+                    <Close onClick={() => setisOpened(false)} />
+                    <SketchPicker color={color} onChange={handleChange} />
                 </Popup> : null
             }
         </Wrapper>
     )
-    
+
 }
 
 export const ColorPicker = connect(mapStateToProps, mapDispatchToProps)(ColorPickerRaw)
+
+
+
 

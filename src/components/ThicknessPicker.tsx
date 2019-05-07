@@ -7,17 +7,11 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 50%;
     height: 100%;
     align-items: center;
     justify-content: center;
     padding: 10px;
-`
-const StyledValue = styled.p`
-    font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 4rem;
-    font-weight: bold;
-    margin-left: 10px;
 `
 const StyledInput = styled.input`
     -webkit-appearance: none;
@@ -68,8 +62,7 @@ const ThicknessPickerRaw : React.FC<Props> = ( { thickness, selectThickness } : 
 
     return (
         <Wrapper>
-            <StyledInput type="range" min="1" max="10" step="1" value={getThickness} onChange={handleChange} />
-            <StyledValue>{thickness}</StyledValue>
+            <StyledInput type="range" min="1" max="25" step="1" value={getThickness} onChange={handleChange} />
         </Wrapper>
     )
 }
