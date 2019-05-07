@@ -1,7 +1,7 @@
-import rootReducer  from './rootReducer'
+import rootReducer from './rootReducer'
 
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore } from 'redux';
+import { createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
-const enhancer = composeWithDevTools();
+const enhancer = composeWithDevTools()
 export const store = createStore(rootReducer, enhancer)

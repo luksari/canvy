@@ -1,91 +1,87 @@
-import React, { useState } from 'react'
-import { SketchPicker, Color, ColorResult } from 'react-color'
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { RootState } from 'MyTypes';
-import { selectColor } from '../containers/Toolbar/duck/actions';
+import { RootState } from 'MyTypes'
+import react, { useState } from 'react'
+import { Color, ColorResult, SketchPicker } from 'react-color'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { selectColor } from '../containers/Toolbar/duck/actions'
 
 const Wrapper = styled.div`
-    display: flex;
-    padding: 15px;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    position: relative;
+  display: flex;
+  padding: 15px;
+  height: 100%;
+  align-items: center;
+  position: relative;
 `
 
 const Swatch = styled.div`
-    width: 100%;
-    max-width: 150px;
-    padding: 10px;
-    height: 45px;
-    background: #FFFFFF;
-    border-radius: 2px;
-    box-shadow: 0px 4px 5px 0px rgba(173,173,173,0.59);
-    cursor: pointer;
+  width: 150px;
+  max-width: 150px;
+  padding: 10px;
+  height: 45px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0px 4px 5px 0px rgba(173, 173, 173, 0.59);
+  cursor: pointer;
 `
 
 const ColorDiv = styled.div`
-    width: 100%;
-    border-radius: 2px;
-    height: 100%;
-    background: ${ props => props.color};
+  width: 100%;
+  border-radius: 2px;
+  height: 100%;
+  background: ${props => props.color};
 `
 
 const Popup = styled.div`
-    position: absolute;
-    z-index: 3; 
-    left: 35%;
-    top: 50%;
+  position: absolute;
+  z-index: 3;
+  left: 35%;
+  top: 50%;
 `
 
 const Close = styled.div`
-    position: fixed;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `
 
 const mapStateToProps = ({ toolbarReducer }: RootState) => ({
-    color: toolbarReducer.color,
+  color: toolbarReducer.color,
 })
 
 const mapDispatchToProps = {
-    selectColor,
+  selectColor,
 }
-
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 const ColorPickerRaw: React.FC<Props> = ({ color, selectColor }) => {
-    const [isOpened, setisOpened] = useState(false)
+  const [isOpened, setisOpened] = useState(false)
 
-    const handleClick = () => {
-        setisOpened(isOpened => !isOpened)
-    }
-    const handleChange = (color: ColorResult) => {
-        selectColor(color.hex)
-    }
+  const handleClick = () => {
+    setisOpened(isOpened => !isOpened)
+  }
+  const handleChange = (color: ColorResult) => {
+    selectColor(color.hex)
+  }
 
-    return (
-        <Wrapper>
-            <Swatch onClick={handleClick}>
-                <ColorDiv color={color} />
-            </Swatch>
-            {isOpened ?
-                <Popup>
-                    <Close onClick={() => setisOpened(false)} />
-                    <SketchPicker color={color} onChange={handleChange} />
-                </Popup> : null
-            }
-        </Wrapper>
-    )
-
+  return (
+    <Wrapper>
+      <Swatch onClick={handleClick}>
+        <ColorDiv color={color} />
+      </Swatch>
+      {isOpened ? (
+        <Popup>
+          <Close onClick={() => setisOpened(false)} />
+          <SketchPicker color={color} onChange={handleChange} />
+        </Popup>
+      ) : null}
+    </Wrapper>
+  )
 }
 
-export const ColorPicker = connect(mapStateToProps, mapDispatchToProps)(ColorPickerRaw)
-
-
-
-
+export const ColorPicker = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ColorPickerRaw)
