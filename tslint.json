@@ -1,7 +1,3 @@
 {
-    "extends": [
-        "tslint:recommended",
-        "tslint-config-airbnb",
-        "tslint-react",
-    ]
+    "extends": ["tslint:react"]
 }

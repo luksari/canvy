@@ -19,9 +19,9 @@
     "typescript": "3.4.3"
   },
   "scripts": {
-    "pre-commit": "yarn tslint:fix && yarn build && yarn test",
-    "tslint": "tslint --project tsconfig.json",
-    "tslint:fix": "tslint --project tsconfig.json",
+    "pre-commit": "yarn run tslint:fix && yarn build && yarn test",
+    "tslint": "tslint --project tslint.json",
+    "tslint:fix": "tslint --project tslint.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -29,13 +29,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "set CI=true && yarn run pre-commit  ",
-      "pre-push": "set CI=true && lint-staged && yarn test"
-    },
-    "lint-staged": {
-      "*.{ts,tsx}": "tslint -c ./tslint.json"
-       
+      "pre-commit": "set CI=true && lint-staged",
+      "pre-push": "set CI=true && lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "tslint -c ./tsconfig.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,8 +54,6 @@
     "redux-immutable-state-invariant": "^2.1.0",
     "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
     "tslint-react": "^4.0.0",
     "typesafe-actions": "^4.0.0"
   }
