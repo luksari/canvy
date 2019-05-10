@@ -4,5 +4,8 @@
     "stylelint-config-standard",
     "stylelint-config-styled-components"
   ],
+  "rules": {
+    declaration-colon-newline-after: "always-multi-line"
+  },
   "syntax": "scss"
 }
