@@ -29,12 +29,18 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "set CI=true && lint-staged",
-      "pre-push": "set CI=true && lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": "tslint -c ./tsconfig.json"
+    "*.{ts,tsx}": [
+      "tslint -c ./tslint.json --fix",
+      "stylelint -c .stylelintrc --fix",
+      "prettier -c .prettierrc --write",
+      "git add"
+      ]
+
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -52,6 +58,10 @@
     "redux-devtools": "^3.5.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-immutable-state-invariant": "^2.1.0",
+    "stylelint": "^10.0.1",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.7.0",
     "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-react": "^4.0.0",
