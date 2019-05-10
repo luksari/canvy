@@ -8,5 +8,5 @@
   "rules": {
     declaration-colon-newline-after: false
   },
-  "syntax": "scss"
+  "syntax": "source-css.styled"
 }
