@@ -1,8 +1,8 @@
-import { RootState } from 'MyTypes'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { selectThickness } from '../containers/Toolbar/duck/actions'
+import { RootState } from 'MyTypes';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { selectThickness } from '../containers/Toolbar/duck/actions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,7 +12,24 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 10px;
-`
+`;
+
+const thumbStyles = (props: any) => `
+  background-color: #e74c3c;
+  width: ${(props.value as number) < 2 ? (props.value as number) * 25 : 40}px;
+  height: ${(props.value as number) < 2 ? (props.value as number) * 25 : 40}px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  &:hover {
+    background-color: white;
+    border: 2px solid #e74c3c;
+  }
+
+  &:active {
+    transform: scale(1.6);
+}`;
 
 const StyledInput = styled.input`
   appearance: none;
@@ -21,50 +38,50 @@ const StyledInput = styled.input`
   height: 5px;
   border-radius: 5px;
   outline: 0;
-  &::-webkit-slider-thumb {
-    background-color: #e74c3c;
-    width: ${props =>
-      (props.value as number) < 2 ? (props.value as number) * 25 : 40}px;
-    height: ${props =>
-      (props.value as number) < 2 ? (props.value as number) * 25 : 40}px;
-    border-radius: 50%;
-    border: 2px solid white;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-
-    &:hover {
-      background-color: white;
-      border: 2px solid #e74c3c;
-    }
-
-    &:active {
-      transform: scale(1.6);
-    }
+  &:focus {
+    outline: none;
   }
-`
+  &::-ms-track {
+    width: 100%;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+  &::-ms-thumb {
+    ${thumbStyles}
+  }
+
+  &::-moz-range-thumb {
+    ${thumbStyles}
+  }
+  &::-webkit-slider-thumb {
+    appearance: none;
+    ${thumbStyles}
+  }
+`;
 
 const mapDispatchToProps = {
   selectThickness,
-}
+};
 
 const mapStateToProps = ({ toolbarReducer }: RootState) => ({
   thickness: toolbarReducer.thickness,
-})
+});
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const ThicknessPickerRaw: React.FC<Props> = ({
   thickness,
   selectThickness,
 }: Props) => {
-  const [getThickness, setThickness] = useState(thickness)
+  const [getThickness, setThickness] = useState(thickness);
 
   const handleChange = (event: SyntheticEvent) => {
-    const value = parseInt((event.target as HTMLInputElement).value, 2)
-    // Needed it because of React Controlled Inputs
-    setThickness(value)
-    selectThickness(value)
-  }
+    const value = parseInt((event.target as HTMLInputElement).value, 10);
+    setThickness(value);
+    selectThickness(value);
+  };
 
   return (
     <Wrapper>
@@ -77,10 +94,10 @@ const ThicknessPickerRaw: React.FC<Props> = ({
         onChange={handleChange}
       />
     </Wrapper>
-  )
-}
+  );
+};
 
 export const ThicknessPicker = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ThicknessPickerRaw)
+)(ThicknessPickerRaw);
