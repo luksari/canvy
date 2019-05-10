@@ -6,7 +6,7 @@
     "stylelint-config-styled-components"
   ],
   "rules": {
-    declaration-colon-newline-after: "always-multi-line"
+    declaration-colon-newline-after: false
   },
   "syntax": "scss"
 }
