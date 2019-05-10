@@ -1,6 +1,6 @@
 import { RootState } from 'MyTypes'
-import react, { useState } from 'react'
-import { Color, ColorResult, SketchPicker } from 'react-color'
+import React, { useState } from 'react'
+import { ColorResult, SketchPicker } from 'react-color'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { selectColor } from '../containers/Toolbar/duck/actions'
@@ -18,9 +18,9 @@ const Swatch = styled.div`
   max-width: 150px;
   padding: 10px;
   height: 45px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 2px;
-  box-shadow: 0px 4px 5px 0px rgba(173, 173, 173, 0.59);
+  box-shadow: 0 4px 5px 0 rgba(173, 173, 173, 0.59);
   cursor: pointer;
 `
 

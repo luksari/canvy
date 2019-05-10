@@ -1,5 +1,5 @@
 import react from 'react'
-import styledComponents from 'styled-components'
+import styled from 'styled-components'
 import { GlobalStyle } from '../../assets/GlobalStyle'
 import { CanvasComponent } from '../Canvas/Canvas'
 import { Toolbar } from '../Toolbar/Toolbar'
