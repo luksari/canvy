@@ -1,6 +1,6 @@
-import react from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import styledComponents from 'styled-components'
+import styled from 'styled-components'
 import { ColorPicker } from '../../components/ColorPicker'
 import { ThicknessPicker } from '../../components/ThicknessPicker'
 import { selectColor, selectThickness } from './duck/actions'
@@ -25,7 +25,7 @@ const ToolbarContainer = styled.div`
   justify-content: flex-start;
   background: #f5f5f5;
   z-index: 2;
-  box-shadow: 0px 0px 5px black;
+  box-shadow: 0 0 5px black;
 `
 
 const ToolbarRaw: React.FunctionComponent<Props> = () => (

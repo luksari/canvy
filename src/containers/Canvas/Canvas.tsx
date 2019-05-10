@@ -1,10 +1,16 @@
 import { Point } from 'MyModels'
 import { RootState } from 'MyTypes'
-import react, { createRef, MouseEvent, TouchEvent, useEffect } from 'react'
+import React, { createRef, MouseEvent, TouchEvent, useEffect } from 'react'
 import { connect } from 'react-redux'
-import styledComponents from 'styled-components'
+import styled from 'styled-components'
 import { coordProvider } from '../../utils/coordProvider'
-import { addLine, createLine, drawing, endDrawing, startDrawing } from './duck/actions'
+import {
+  addLine,
+  createLine,
+  drawing,
+  endDrawing,
+  startDrawing,
+} from './duck/actions'
 
 const mapDispatchToProps = {
   startDrawing,

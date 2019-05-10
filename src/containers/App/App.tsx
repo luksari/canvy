@@ -1,4 +1,4 @@
-import react from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { GlobalStyle } from '../../assets/GlobalStyle'
 import { CanvasComponent } from '../Canvas/Canvas'

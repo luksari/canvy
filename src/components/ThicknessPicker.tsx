@@ -1,5 +1,5 @@
 import { RootState } from 'MyTypes'
-import react, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { selectThickness } from '../containers/Toolbar/duck/actions'
@@ -13,13 +13,14 @@ const Wrapper = styled.div`
   justify-content: center;
   padding: 10px;
 `
+
 const StyledInput = styled.input`
+  appearance: none;
   background-color: #bdc3c7;
   width: 100%;
   height: 5px;
   border-radius: 5px;
   outline: 0;
-
   &::-webkit-slider-thumb {
     background-color: #e74c3c;
     width: ${props =>
