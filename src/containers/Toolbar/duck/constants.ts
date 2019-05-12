@@ -1,3 +1,3 @@
-export const SELECT_THICKNESS = 'SELECT_THICKNESS'
-export const SELECT_COLOR = 'SELECT_COLOR'
-export const ERASE = 'ERASE'
+export const SELECT_THICKNESS = 'SELECT_THICKNESS';
+export const SELECT_COLOR = 'SELECT_COLOR';
+export const RESET_CANVAS = 'RESET_CANVAS';

@@ -1,32 +1,42 @@
-import { combineReducers } from 'redux'
-import { ActionType } from 'typesafe-actions'
-import * as toolbar from './actions'
-import * as constants from './constants'
+import { combineReducers } from 'redux';
+import { ActionType } from 'typesafe-actions';
+import * as toolbar from './actions';
+import * as constants from './constants';
 
 export interface ToolbarState {
-  color: string
-  thickness: number
+  color: string;
+  thickness: number;
+  resetFlag: boolean;
 }
 
-export type ToolbarAction = ActionType<typeof toolbar>
+export type ToolbarAction = ActionType<typeof toolbar>;
 
 export const toolbarReducer = combineReducers<ToolbarState, ToolbarAction>({
   color: (state: string = '#BADA55', action: ToolbarAction) => {
-    const { SELECT_COLOR } = constants
+    const { SELECT_COLOR } = constants;
     switch (action.type) {
       case SELECT_COLOR:
-        return action.payload
+        return action.payload;
       default:
-        return state
+        return state;
     }
   },
   thickness: (state: number = 1, action: ToolbarAction) => {
-    const { SELECT_THICKNESS } = constants
+    const { SELECT_THICKNESS } = constants;
     switch (action.type) {
       case SELECT_THICKNESS:
-        return action.payload
+        return action.payload;
       default:
-        return state
+        return state;
     }
   },
-})
+  resetFlag: (state: boolean = false, action: ToolbarAction) => {
+    const { RESET_CANVAS } = constants;
+    switch (action.type) {
+      case RESET_CANVAS:
+        return action.payload;
+      default:
+        return state;
+    }
+  },
+});

@@ -1,22 +1,22 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import styled from 'styled-components'
-import { ColorPicker } from '../../components/ColorPicker'
-import { ThicknessPicker } from '../../components/ThicknessPicker'
-import { selectColor, selectThickness } from './duck/actions'
-import { ToolbarState } from './duck/reducer'
-
-const mapStateToProps = (toolbarReducer: ToolbarState) => ({
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { ColorPicker } from '../../components/ColorPicker';
+import { ThicknessPicker } from '../../components/ThicknessPicker';
+import { selectColor, selectThickness } from './duck/actions';
+import { RootState } from 'MyTypes';
+import { ResetButton } from '../../components/ResetButton';
+const mapStateToProps = ({ toolbarReducer }: RootState) => ({
   color: toolbarReducer.color,
   thickness: toolbarReducer.thickness,
-})
+});
 
 const mapDispatchToProps = {
   selectColor,
   selectThickness,
-}
+};
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const ToolbarContainer = styled.div`
   width: 100%;
@@ -26,16 +26,17 @@ const ToolbarContainer = styled.div`
   background: #f5f5f5;
   z-index: 2;
   box-shadow: 0 0 5px black;
-`
+`;
 
 const ToolbarRaw: React.FunctionComponent<Props> = () => (
   <ToolbarContainer>
     <ColorPicker />
     <ThicknessPicker />
+    <ResetButton />
   </ToolbarContainer>
-)
+);
 
 export const Toolbar = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ToolbarRaw)
+)(ToolbarRaw);

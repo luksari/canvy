@@ -1,7 +1,5 @@
 import { Point } from 'MyModels';
 import { RootState } from 'MyTypes';
-// @ts-ignore
-import Shake from 'shake.js';
 import React, { useRef, MouseEvent, TouchEvent, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -14,6 +12,7 @@ import {
   startDrawing,
   setDims,
 } from './duck/actions';
+import { resetCanvas } from '../Toolbar/duck/actions';
 
 const mapDispatchToProps = {
   startDrawing,
@@ -22,6 +21,7 @@ const mapDispatchToProps = {
   createLine,
   addLine,
   setDims,
+  resetCanvas,
 };
 
 const mapStateToProps = ({ canvasReducer, toolbarReducer }: RootState) => ({
@@ -32,6 +32,7 @@ const mapStateToProps = ({ canvasReducer, toolbarReducer }: RootState) => ({
   color: toolbarReducer.color,
   dims: canvasReducer.dims,
   lines: canvasReducer.lines,
+  resetFlag: toolbarReducer.resetFlag,
 });
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -56,6 +57,8 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
   setDims,
   dims,
   lines,
+  resetFlag,
+  resetCanvas,
 }: Props) => {
   const canvasRef = useRef(null);
 
@@ -87,6 +90,7 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
     ctx.fillRect(0, 0, canvas().width, canvas().height);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
+
     restoreCanvas();
   }, [dims]);
 
@@ -100,6 +104,12 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
     };
   }, []);
 
+  useEffect(() => {
+    const ctx = context();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvas().width, canvas().height);
+  }, [resetFlag]);
+
   const handleStartDrawing = (event: MouseEvent | TouchEvent) => {
     const [offsetX, offsetY] = coordProvider(event, rect());
     const ctx = context();
@@ -111,6 +121,7 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
       color: color,
       thickness: thickness,
     });
+    if (resetFlag === true) resetCanvas(false);
   };
   const handleStopDrawing = (event: MouseEvent | TouchEvent): void => {
     const [offsetX, offsetY] = coordProvider(event, rect());
