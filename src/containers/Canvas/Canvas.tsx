@@ -1,5 +1,7 @@
 import { Point } from 'MyModels';
 import { RootState } from 'MyTypes';
+// @ts-ignore
+import Shake from 'shake.js';
 import React, { useRef, MouseEvent, TouchEvent, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -95,20 +97,6 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      console.log(
-        `alpha: ${event.alpha} beta: ${event.beta}, gamma: ${
-          event.gamma
-        }, absolute: ${event.absolute}`
-      );
-    };
-    window.addEventListener('deviceorientation', handleOrientation, true);
-    return () => {
-      window.removeEventListener('deviceorientation', handleOrientation);
     };
   }, []);
 
