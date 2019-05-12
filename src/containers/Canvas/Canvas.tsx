@@ -68,6 +68,8 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
           line.forEach((point: Point, index: number) => {
             const prevPoint = index > 0 ? line[index - 1] : undefined;
             if (typeof prevPoint !== 'undefined') {
+              ctx.strokeStyle = prevPoint.color;
+              ctx.lineWidth = prevPoint.thickness;
               ctx.beginPath();
               ctx.moveTo(prevPoint.x, prevPoint.y);
               ctx.lineTo(point.x, point.y);
@@ -101,11 +103,16 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
     const ctx = context();
     ctx.strokeStyle = color ? color : '#BADA55';
     ctx.lineWidth = thickness ? thickness : 2;
-    startDrawing({ x: offsetX, y: offsetY });
+    startDrawing({
+      x: offsetX,
+      y: offsetY,
+      color: color,
+      thickness: thickness,
+    });
   };
   const handleStopDrawing = (event: MouseEvent | TouchEvent): void => {
     const [offsetX, offsetY] = coordProvider(event, rect());
-    endDrawing({ x: offsetX, y: offsetY });
+    endDrawing({ x: offsetX, y: offsetY, color: color, thickness: thickness });
     if (currentLine.length > 0) {
       addLine(currentLine);
     }
@@ -120,7 +127,12 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
       ctx.lineTo(offsetX, offsetY);
       ctx.stroke();
       // Dispatch store actions with data
-      const newPoint: Point = { x: offsetX, y: offsetY };
+      const newPoint: Point = {
+        x: offsetX,
+        y: offsetY,
+        color: color,
+        thickness: thickness,
+      };
       drawing(newPoint);
       createLine(newPoint);
     }

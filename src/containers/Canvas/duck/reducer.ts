@@ -26,7 +26,10 @@ export const canvasReducer = combineReducers<CanvasState, CanvasAction>({
         return state;
     }
   },
-  prevPoint: (state: Point = { x: 0, y: 0 }, action: CanvasAction) => {
+  prevPoint: (
+    state: Point = { x: 0, y: 0, color: '#BADA55', thickness: 1 },
+    action: CanvasAction
+  ) => {
     const { START_DRAWING, DRAWING, END_DRAWING } = constants;
     switch (action.type) {
       case START_DRAWING:
