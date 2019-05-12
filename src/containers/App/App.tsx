@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { GlobalStyle } from '../../assets/GlobalStyle'
-import { CanvasComponent } from '../Canvas/Canvas'
-import { Toolbar } from '../Toolbar/Toolbar'
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { GlobalStyle } from '../../assets/GlobalStyle';
+import { CanvasComponent } from '../Canvas/Canvas';
+import { Toolbar } from '../Toolbar/Toolbar';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -10,14 +10,16 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   touch-action: none;
-`
+`;
 
-const App: React.FC<{}> = () => (
-  <AppContainer>
-    <GlobalStyle />
-    <Toolbar />
-    <CanvasComponent />
-  </AppContainer>
-)
+const App: React.FC<{}> = () => {
+  return (
+    <AppContainer>
+      <GlobalStyle />
+      <Toolbar />
+      <CanvasComponent />
+    </AppContainer>
+  );
+};
 
-export default App
+export default App;

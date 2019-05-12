@@ -1,6 +1,6 @@
 import { Point } from 'MyModels';
 import { RootState } from 'MyTypes';
-import React, { createRef, MouseEvent, TouchEvent, useEffect } from 'react';
+import React, { useRef, MouseEvent, TouchEvent, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { coordProvider } from '../../utils/coordProvider';
@@ -55,12 +55,12 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
   dims,
   lines,
 }: Props) => {
-  const canvasRef = createRef<HTMLCanvasElement>();
+  const canvasRef = useRef(null);
 
   const canvas = (): HTMLCanvasElement => canvasRef.current!;
   const context = (): CanvasRenderingContext2D => canvas().getContext('2d')!;
   const rect = (): ClientRect => canvas().getBoundingClientRect();
-
+  // Effect for refreshing the canvas after Device width || height changes
   useEffect(() => {
     const restoreCanvas = () => {
       if (lines.length > 0) {
@@ -85,16 +85,30 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
     ctx.fillRect(0, 0, canvas().width, canvas().height);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-
     restoreCanvas();
   }, [dims]);
 
+  // Effect that handles the device width || height changes
   useEffect(() => {
     const handleResize = () =>
-      setDims({ width: window.innerWidth, height: window.innerHeight * 0.8 });
+      setDims({ width: window.innerWidth, height: window.innerHeight * 0.9 });
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      console.log(
+        `alpha: ${event.alpha} beta: ${event.beta}, gamma: ${
+          event.gamma
+        }, absolute: ${event.absolute}`
+      );
+    };
+    window.addEventListener('deviceorientation', handleOrientation, true);
+    return () => {
+      window.removeEventListener('deviceorientation', handleOrientation);
     };
   }, []);
 

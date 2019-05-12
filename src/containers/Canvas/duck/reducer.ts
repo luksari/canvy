@@ -65,7 +65,7 @@ export const canvasReducer = combineReducers<CanvasState, CanvasAction>({
   dims: (
     state: Dimensions = {
       width: window.innerWidth,
-      height: window.innerHeight * 0.8,
+      height: window.innerHeight * 0.9,
     },
     action: CanvasAction
   ) => {
