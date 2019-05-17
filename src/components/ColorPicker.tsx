@@ -7,7 +7,6 @@ import { selectColor } from '../containers/Toolbar/duck/actions';
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 15px;
   height: 100%;
   align-items: center;
   position: relative;
@@ -17,7 +16,7 @@ const Swatch = styled.div`
   width: 80px;
   max-width: 150px;
   padding: 10px;
-  height: 45px;
+  height: 80%;
   background: #fff;
   border-radius: 2px;
   box-shadow: 0 4px 5px 0 rgba(173, 173, 173, 0.59);

@@ -20,7 +20,7 @@ const StyledButton = styled.button`
   width: 80px;
   max-width: 150px;
   padding: 10px;
-  height: 45px;
+  height: 80%;
   background: #fff;
   border-radius: 2px;
   box-shadow: 0 4px 5px 0 rgba(173, 173, 173, 0.59);
@@ -31,9 +31,6 @@ const ResetButtonRaw: React.FunctionComponent<Props> = ({ resetCanvas }) => {
     <Wrapper>
       <StyledButton
         onClick={() => {
-          resetCanvas(true);
-        }}
-        onTouchStart={() => {
           resetCanvas(true);
         }}
       >

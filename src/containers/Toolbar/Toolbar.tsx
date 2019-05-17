@@ -22,8 +22,9 @@ const ToolbarContainer = styled.div`
   width: 100%;
   height: 20%;
   display: flex;
-  justify-content: flex-start;
-  background: #f5f5f5;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background: #f3f3f3;
   z-index: 2;
   box-shadow: 0 0 5px black;
 `;
