@@ -18,6 +18,7 @@ const App: React.FC<{}> = () => {
       <GlobalStyle />
       <Toolbar />
       <CanvasComponent />
+      <Toolbar alternative />
     </AppContainer>
   );
 };

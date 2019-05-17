@@ -13,6 +13,7 @@ import {
   setDims,
 } from './duck/actions';
 import { resetCanvas } from '../Toolbar/duck/actions';
+import { DEFAULT_DIMS } from '../../utils/canvasDims';
 
 const mapDispatchToProps = {
   startDrawing,
@@ -96,8 +97,7 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
 
   // Effect that handles the device width || height changes
   useEffect(() => {
-    const handleResize = () =>
-      setDims({ width: window.innerWidth, height: window.innerHeight * 0.9 });
+    const handleResize = () => setDims(DEFAULT_DIMS);
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
