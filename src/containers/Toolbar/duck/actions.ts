@@ -1,6 +1,12 @@
 import { createStandardAction } from 'typesafe-actions';
 
-import { SELECT_COLOR, SELECT_THICKNESS, RESET_CANVAS } from './constants';
+import {
+  SELECT_COLOR,
+  SELECT_THICKNESS,
+  RESET_CANVAS,
+  SELECT_PENCIL,
+  SELECT_ERASE,
+} from './constants';
 
 export const selectColor = createStandardAction(SELECT_COLOR).map(
   (color: string) => ({
@@ -17,3 +23,6 @@ export const resetCanvas = createStandardAction(RESET_CANVAS).map(
     payload: resetFlag,
   })
 );
+
+export const selectPencil = createStandardAction(SELECT_PENCIL)<void>();
+export const selectErase = createStandardAction(SELECT_ERASE)<void>();

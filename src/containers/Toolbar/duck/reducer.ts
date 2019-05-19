@@ -7,6 +7,8 @@ export interface ToolbarState {
   color: string;
   thickness: number;
   resetFlag: boolean;
+  isPencil: boolean;
+  isErase: boolean;
 }
 
 export type ToolbarAction = ActionType<typeof toolbar>;
@@ -35,6 +37,28 @@ export const toolbarReducer = combineReducers<ToolbarState, ToolbarAction>({
     switch (action.type) {
       case RESET_CANVAS:
         return action.payload;
+      default:
+        return state;
+    }
+  },
+  isPencil: (state: boolean = true, action: ToolbarAction) => {
+    const { SELECT_PENCIL, SELECT_ERASE } = constants;
+    switch (action.type) {
+      case SELECT_PENCIL:
+        return true;
+      case SELECT_ERASE:
+        return false;
+      default:
+        return state;
+    }
+  },
+  isErase: (state: boolean = false, action: ToolbarAction) => {
+    const { SELECT_ERASE, SELECT_PENCIL } = constants;
+    switch (action.type) {
+      case SELECT_PENCIL:
+        return false;
+      case SELECT_ERASE:
+        return true;
       default:
         return state;
     }
