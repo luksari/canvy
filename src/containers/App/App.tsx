@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../../assets/GlobalStyle';
 import { CanvasComponent } from '../Canvas/Canvas';
 import { Toolbar } from '../Toolbar/Toolbar';
+import { theme } from '../../assets/theme';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -14,12 +15,14 @@ const AppContainer = styled.div`
 
 const App: React.FC<{}> = () => {
   return (
-    <AppContainer>
-      <GlobalStyle />
-      <Toolbar />
-      <CanvasComponent />
-      <Toolbar alternative />
-    </AppContainer>
+    <ThemeProvider theme={theme}>
+      <AppContainer>
+        <GlobalStyle />
+        <Toolbar />
+        <CanvasComponent />
+        <Toolbar alternative />
+      </AppContainer>
+    </ThemeProvider>
   );
 };
 
