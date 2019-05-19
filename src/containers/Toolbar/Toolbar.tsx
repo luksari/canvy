@@ -6,6 +6,8 @@ import { ThicknessPicker } from '../../components/ThicknessPicker';
 import { selectColor, selectThickness } from './duck/actions';
 import { RootState } from 'MyTypes';
 import { ResetButton } from '../../components/ResetButton';
+import { PencilButton } from '../../components/PencilButton';
+import { EraseButton } from '../../components/EraseButton';
 
 const mapStateToProps = ({ toolbarReducer }: RootState) => ({
   color: toolbarReducer.color,

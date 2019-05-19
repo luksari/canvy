@@ -4,24 +4,7 @@ import { ColorResult, SketchPicker } from 'react-color';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { selectColor } from '../containers/Toolbar/duck/actions';
-
-const Wrapper = styled.div`
-  display: flex;
-  height: 100%;
-  align-items: center;
-  position: relative;
-`;
-
-const Swatch = styled.div`
-  width: 80px;
-  max-width: 150px;
-  padding: 10px;
-  height: 80%;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 4px 5px 0 rgba(173, 173, 173, 0.59);
-  cursor: pointer;
-`;
+import { StyledButton } from '../assets/styled';
 
 const ColorDiv = styled.div`
   width: 100%;
@@ -33,8 +16,8 @@ const ColorDiv = styled.div`
 const Popup = styled.div`
   position: absolute;
   z-index: 3;
-  left: 35%;
-  top: 50%;
+  left: 15%;
+  top: 10%;
 `;
 
 const Close = styled.div`
@@ -66,17 +49,17 @@ const ColorPickerRaw: React.FC<Props> = ({ color, selectColor }) => {
   };
 
   return (
-    <Wrapper>
-      <Swatch onClick={handleClick}>
+    <>
+      <StyledButton onClick={handleClick}>
         <ColorDiv color={color} />
-      </Swatch>
+      </StyledButton>
       {isOpened ? (
         <Popup>
           <Close onClick={() => setisOpened(false)} />
           <SketchPicker color={color} onChange={handleChange} />
         </Popup>
       ) : null}
-    </Wrapper>
+    </>
   );
 };
 
