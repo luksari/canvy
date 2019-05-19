@@ -40,7 +40,8 @@ const ToolbarRaw: React.FunctionComponent<Props> = ({ alternative }) => (
   <ToolbarContainer>
     {alternative ? (
       <>
-        <p>Dupa Wolowa</p>
+        <PencilButton />
+        <EraseButton />
       </>
     ) : (
       <>
