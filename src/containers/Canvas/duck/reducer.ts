@@ -11,6 +11,7 @@ export interface CanvasState {
   currentLine: Point[];
   lines: Point[][];
   dims: Dimensions;
+  backgroundColor: string;
 }
 
 export type CanvasAction = ActionType<typeof canvas>;
@@ -68,6 +69,15 @@ export const canvasReducer = combineReducers<CanvasState, CanvasAction>({
     switch (action.type) {
       case SET_DIMS:
         return action.payload.dims;
+      default:
+        return state;
+    }
+  },
+  backgroundColor: (state: string = '#FFFFFF', action: CanvasAction) => {
+    const { SET_BACKGROUND_COLOR } = constants;
+    switch (action.type) {
+      case SET_BACKGROUND_COLOR:
+        return action.payload.color;
       default:
         return state;
     }

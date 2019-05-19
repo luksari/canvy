@@ -8,6 +8,7 @@ import {
   END_DRAWING,
   START_DRAWING,
   SET_DIMS,
+  SET_BACKGROUND_COLOR,
 } from './constants';
 
 export const startDrawing = createStandardAction(START_DRAWING).map(
@@ -38,3 +39,8 @@ export const setDims = createStandardAction(SET_DIMS).map(
     payload: { dims },
   })
 );
+export const setBackgroundColor = createStandardAction(
+  SET_BACKGROUND_COLOR
+).map((color: string) => ({
+  payload: { color },
+}));
