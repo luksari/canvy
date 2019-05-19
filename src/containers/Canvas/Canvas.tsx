@@ -34,6 +34,9 @@ const mapStateToProps = ({ canvasReducer, toolbarReducer }: RootState) => ({
   dims: canvasReducer.dims,
   lines: canvasReducer.lines,
   resetFlag: toolbarReducer.resetFlag,
+  backgroundColor: canvasReducer.backgroundColor,
+  isPencil: toolbarReducer.isPencil,
+  isErase: toolbarReducer.isErase,
 });
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -60,6 +63,9 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
   lines,
   resetFlag,
   resetCanvas,
+  backgroundColor,
+  isPencil,
+  isErase,
 }: Props) => {
   const canvasRef = useRef(null);
 
@@ -87,7 +93,7 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
     };
 
     const ctx = context();
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas().width, canvas().height);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
@@ -106,14 +112,15 @@ const CanvasComponentRaw: React.FunctionComponent<Props> = ({
 
   useEffect(() => {
     const ctx = context();
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, canvas().width, canvas().height);
   }, [resetFlag]);
 
   const handleStartDrawing = (event: MouseEvent | TouchEvent) => {
     const [offsetX, offsetY] = coordProvider(event, rect());
     const ctx = context();
-    ctx.strokeStyle = color ? color : '#BADA55';
+    ctx.strokeStyle =
+      isErase && !isPencil ? backgroundColor : isPencil ? color : '#BADA55';
     ctx.lineWidth = thickness ? thickness : 2;
     startDrawing({
       x: offsetX,
