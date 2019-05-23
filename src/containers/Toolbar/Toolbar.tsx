@@ -27,16 +27,13 @@ type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps &
   ComponentProps;
 
-const ToolbarContainer = styled.div<ComponentProps>`
+const ToolbarContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background: ${props =>
-    props.alternative === true
-      ? props.theme.colors.primary
-      : props.theme.colors.gray};
+  background: ${props => props.theme.colors.gray};
   z-index: 2;
   box-shadow: 0 0 5px black;
 `;
@@ -44,15 +41,15 @@ const ToolbarContainer = styled.div<ComponentProps>`
 const ToolbarRaw: React.FunctionComponent<Props> = ({ alternative }) => (
   <>
     {alternative ? (
-      <ToolbarContainer alternative>
+      <ToolbarContainer>
         <PencilButton />
         <EraseButton />
+        <ResetButton />
       </ToolbarContainer>
     ) : (
       <ToolbarContainer>
         <ColorPicker />
         <ThicknessPicker />
-        <ResetButton />
       </ToolbarContainer>
     )}
   </>
