@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { ActionType, action } from 'typesafe-actions';
 import * as canvas from './actions';
 import * as constants from './constants';
-import { DEFAULT_DIMS } from '../../../utils/canvasDims';
+import { calculateDefaultDims } from '../../../utils/canvasDims';
 
 export interface CanvasState {
   isDrawing: boolean;
@@ -64,7 +64,7 @@ export const canvasReducer = combineReducers<CanvasState, CanvasAction>({
         return state;
     }
   },
-  dims: (state: Dimensions = DEFAULT_DIMS, action: CanvasAction) => {
+  dims: (state: Dimensions = calculateDefaultDims(), action: CanvasAction) => {
     const { SET_DIMS } = constants;
     switch (action.type) {
       case SET_DIMS:
