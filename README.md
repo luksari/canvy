@@ -2,7 +2,7 @@
 
 ## Description
 **Canvy** is the Web Application that allows user to draw on canvas, with color & thickness selection.
-[Feef free to check live verion](https://canvy.netlify.com/)
+[Feel free to check live verion](https://canvy.netlify.com/)
 
 ## Functionalities
 Functionalities that I have decided to implement:
